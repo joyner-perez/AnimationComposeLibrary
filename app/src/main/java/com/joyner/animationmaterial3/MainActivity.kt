@@ -15,6 +15,8 @@ import com.joyner.animationcomposelibrary.HorVerRotationAnimation
 import com.joyner.animationcomposelibrary.HorizontalRotationAnimation
 import com.joyner.animationcomposelibrary.MiddleHorVerRotationAnimation
 import com.joyner.animationcomposelibrary.VerticalRotationAnimation
+import com.joyner.animationcomposelibrary.move.MoveAnimation
+import com.joyner.animationcomposelibrary.move.MoveWithComeBackAnimation
 import com.joyner.animationmaterial3.ui.theme.AnimationMaterial3Theme
 
 class MainActivity : ComponentActivity() {
@@ -62,6 +64,17 @@ fun Greeting(name: String) {
         infinity = true,
         delayInfinityMillis = 1000
     ) {
+        Text(text = "Hello $name!")
+    }
+
+    MoveWithComeBackAnimation(
+        infinity = true,
+        delayInfinityMillis = 2000
+    ) {
+        Text(text = "Hello $name!")
+    }
+
+    MoveAnimation() {
         Text(text = "Hello $name!")
     }
 }
