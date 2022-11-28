@@ -1,4 +1,4 @@
-package com.joyner.animationcomposelibrary
+package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
@@ -13,31 +13,31 @@ import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
 
 /**
- *  A rotate horizontal animation for composable views.
+ *  A rotate vertical animation for composable views.
  *
  *  Examples usage:
  *
  * ```
- *  HorizontalRotationAnimation() {
+ *  VerticalRotationAnimation() {
  *      Text(text = "Hello World!")
  *  }
  *  ```
  *
  *  ```
- *  HorizontalRotationAnimation(
+ *  VerticalRotationAnimation(
  *      infinity = true,
- *      delayInfinityMillis = 1000,
+ *      delayInfinityMillis = 1000
  *  ) {
  *      Text(text = "Hello World!")
  *  }
  *  ```
  *
  *  ```
- *  HorizontalRotationAnimation(
+ *  VerticalRotationAnimation(
  *      infinity = true,
  *      delayInfinityMillis = 1000,
- *      initialLeftRotationValue = 180f,
- *      targetLeftRotationValue = 0f,
+ *      initialUpRotationValue = 180f,
+ *      targetDownRotationValue = 0f
  *  ) {
  *      Text(text = "Hello World!")
  *  }
@@ -46,38 +46,38 @@ import kotlinx.coroutines.delay
  *  @param modifier [Modifier] optional modifier for the animation.
  *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
  *  @param delayInfinityMillis [Long] optional delay in millis between repeat animations.
- *  @param initialRightRotationValue [Float] optional initial rotation value for the right side.
- *  @param targetRightRotationValue [Float] optional target rotation value for the right side.
- *  @param initialLeftRotationValue [Float] optional initial rotation value for the left side.
- *  @param targetLeftRotationValue [Float] optional target rotation value for the left side.
- *  @param durationRightRotationMillis [Int] optional duration to rotate to the right side.
- *  @param durationLeftRotationMillis [Int] optional duration to rotate to the left side.
- *  @param initialDelayMillis [Int] optional duration to start animation.
- *  @param endDelayMillis [Int] optional duration to start the second part of animation.
- *  @param easingRightRotation [Easing] optional easing rotation value for the right side.
- *  @param easingLeftRotation [Easing] optional easing rotation value for the left side.
+ *  @param initialUpRotationValue [Float] optional initial rotation value for the up side.
+ *  @param targetUpRotationValue [Float] optional target rotation value for the up side.
+ *  @param initialDownRotationValue [Float] optional initial rotation value for the down side.
+ *  @param targetDownRotationValue [Float] optional target rotation value for the down side.
+ *  @param durationUpRotationMillis [Int] optional duration to rotate to the up side.
+ *  @param durationDownRotationMillis [Int] optional duration to rotate to the down side.
+ *  @param initialDelayMillis [Int] optional delay to start animation.
+ *  @param endDelayMillis [Int] optional delay to start the second part of animation.
+ *  @param easingUpRotation [Easing] optional easing rotation value for the up side.
+ *  @param easingDownRotation [Easing] optional easing rotation value for the down side.
  *  @param content [Composable] the composable element you want to animate.
  *
  *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
  */
 @Composable
-fun HorizontalRotationAnimation(
+fun ExeXRotationAnimation(
     modifier: Modifier = Modifier,
     infinity: Boolean = false,
     delayInfinityMillis: Long = 0,
-    initialRightRotationValue: Float = 0f,
-    targetRightRotationValue: Float = 180f,
-    initialLeftRotationValue: Float = 180f,
-    targetLeftRotationValue: Float = 360f,
-    durationRightRotationMillis: Int = 1000,
-    durationLeftRotationMillis: Int = 1000,
+    initialUpRotationValue: Float = 0f,
+    targetUpRotationValue: Float = 180f,
+    initialDownRotationValue: Float = 180f,
+    targetDownRotationValue: Float = 360f,
+    durationUpRotationMillis: Int = 1000,
+    durationDownRotationMillis: Int = 1000,
     initialDelayMillis: Int = 0,
     endDelayMillis: Int = 0,
-    easingRightRotation: Easing = LinearEasing,
-    easingLeftRotation: Easing = LinearEasing,
+    easingUpRotation: Easing = LinearEasing,
+    easingDownRotation: Easing = LinearEasing,
     content: @Composable () -> Unit
 ) {
-    var yRotation by rememberSaveable {
+    var xRotation by rememberSaveable {
         mutableStateOf(0f)
     }
 
@@ -85,47 +85,47 @@ fun HorizontalRotationAnimation(
         if (infinity) {
             while (true) {
                 animate(
-                    initialRightRotationValue,
-                    targetRightRotationValue,
+                    initialValue = initialUpRotationValue,
+                    targetValue = targetUpRotationValue,
                     animationSpec = tween(
-                        durationMillis = durationRightRotationMillis,
+                        durationMillis = durationUpRotationMillis,
                         delayMillis = initialDelayMillis,
-                        easing = easingRightRotation
+                        easing = easingUpRotation
                     ),
-                    block = { value, _ -> yRotation = value }
+                    block = { value, _ -> xRotation = value }
                 )
                 animate(
-                    initialLeftRotationValue,
-                    targetLeftRotationValue,
+                    initialValue = initialDownRotationValue,
+                    targetValue = targetDownRotationValue,
                     animationSpec = tween(
-                        durationMillis = durationLeftRotationMillis,
+                        durationMillis = durationDownRotationMillis,
                         delayMillis = endDelayMillis,
-                        easing = easingLeftRotation
+                        easing = easingDownRotation
                     ),
-                    block = { value, _ -> yRotation = value }
+                    block = { value, _ -> xRotation = value }
                 )
                 delay(timeMillis = delayInfinityMillis)
             }
         } else {
             animate(
-                0f,
-                180f,
+                initialValue = 0f,
+                targetValue = 180f,
                 animationSpec = tween(
                     durationMillis = 1000,
                     delayMillis = 1000,
                     easing = LinearEasing
                 ),
-                block = { value, _ -> yRotation = value }
+                block = { value, _ -> xRotation = value }
             )
             animate(
-                180f,
-                360f,
+                initialValue = 180f,
+                targetValue = 360f,
                 animationSpec = tween(
                     durationMillis = 1000,
                     delayMillis = endDelayMillis,
                     easing = LinearEasing
                 ),
-                block = { value, _ -> yRotation = value }
+                block = { value, _ -> xRotation = value }
             )
         }
     }
@@ -133,7 +133,7 @@ fun HorizontalRotationAnimation(
     Box(modifier = modifier
         .wrapContentSize()
         .graphicsLayer {
-            rotationY = yRotation
+            rotationX = xRotation
         }
     ) {
         content()

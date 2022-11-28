@@ -29,7 +29,7 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
  *  ```
  *  MoveWithComeBackAnimation(
  *      infinity = true,
- *      delayInfinityMillis = 1000,
+ *      delayInfinityMillis = 1000
  *  ) {
  *      Text(text = "Hello World!")
  *  }

@@ -1,4 +1,4 @@
-package com.joyner.animationcomposelibrary
+package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
@@ -26,7 +26,7 @@ import kotlinx.coroutines.delay
  *  ```
  *  HorVerRotationAnimation(
  *      infinity = true,
- *      delayInfinityMillis = 1000,
+ *      delayInfinityMillis = 1000
  *  ) {
  *      Text(text = "Hello World!")
  *  }
@@ -37,7 +37,7 @@ import kotlinx.coroutines.delay
  *      infinity = true,
  *      delayInfinityMillis = 1000,
  *      initialLeftRotationValue = 180f,
- *      targetLeftRotationValue = 0f,
+ *      targetLeftRotationValue = 0f
  *  ) {
  *      Text(text = "Hello World!")
  *  }
@@ -53,8 +53,8 @@ import kotlinx.coroutines.delay
  *  @param targetLeftRotationValue [Float] optional target rotation value for the left side.
  *  @param durationRightRotationMillis [Int] optional duration to rotate to the right side.
  *  @param durationLeftRotationMillis [Int] optional duration to rotate to the left side.
- *  @param initialDelayMillis [Int] optional duration to start animation.
- *  @param endDelayMillis [Int] optional duration to start the second part of animation.
+ *  @param initialDelayMillis [Int] optional delay to start animation.
+ *  @param endDelayMillis [Int] optional delay to start the second part of animation.
  *  @param easingRightRotation [Easing] optional easing rotation value for the right side.
  *  @param easingLeftRotation [Easing] optional easing rotation value for the left side.
  *  @param content [Composable] the composable element you want to animate.
@@ -62,7 +62,7 @@ import kotlinx.coroutines.delay
  *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
  */
 @Composable
-fun HorVerRotationAnimation(
+fun ExeXYRotationAnimation(
     modifier: Modifier = Modifier,
     infinity: Boolean = false,
     firstHorizontal: Boolean = true,
@@ -95,8 +95,8 @@ fun HorVerRotationAnimation(
             while (true) {
                 if (firstHorizontal) {
                     animate(
-                        initialRightRotationValue,
-                        targetRightRotationValue,
+                        initialValue = initialRightRotationValue,
+                        targetValue = targetRightRotationValue,
                         animationSpec = tween(
                             durationMillis = durationRightRotationMillis,
                             delayMillis = initialDelayMillis,
@@ -105,8 +105,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> yRotation = value }
                     )
                     animate(
-                        initialLeftRotationValue,
-                        targetLeftRotationValue,
+                        initialValue = initialLeftRotationValue,
+                        targetValue = targetLeftRotationValue,
                         animationSpec = tween(
                             durationMillis = durationLeftRotationMillis,
                             delayMillis = endDelayMillis,
@@ -115,8 +115,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> yRotation = value }
                     )
                     animate(
-                        initialUpRotationValue,
-                        targetUpRotationValue,
+                        initialValue = initialUpRotationValue,
+                        targetValue = targetUpRotationValue,
                         animationSpec = tween(
                             durationMillis = durationRightRotationMillis,
                             delayMillis = initialDelayMillis,
@@ -125,8 +125,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> xRotation = value }
                     )
                     animate(
-                        initialDownRotationValue,
-                        targetDownRotationValue,
+                        initialValue = initialDownRotationValue,
+                        targetValue = targetDownRotationValue,
                         animationSpec = tween(
                             durationMillis = durationLeftRotationMillis,
                             delayMillis = endDelayMillis,
@@ -137,8 +137,8 @@ fun HorVerRotationAnimation(
                     delay(timeMillis = delayInfinityMillis)
                 } else {
                     animate(
-                        initialUpRotationValue,
-                        targetUpRotationValue,
+                        initialValue = initialUpRotationValue,
+                        targetValue = targetUpRotationValue,
                         animationSpec = tween(
                             durationMillis = durationRightRotationMillis,
                             delayMillis = initialDelayMillis,
@@ -147,8 +147,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> xRotation = value }
                     )
                     animate(
-                        initialDownRotationValue,
-                        targetDownRotationValue,
+                        initialValue = initialDownRotationValue,
+                        targetValue = targetDownRotationValue,
                         animationSpec = tween(
                             durationMillis = durationLeftRotationMillis,
                             delayMillis = endDelayMillis,
@@ -157,8 +157,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> xRotation = value }
                     )
                     animate(
-                        initialRightRotationValue,
-                        targetRightRotationValue,
+                        initialValue = initialRightRotationValue,
+                        targetValue = targetRightRotationValue,
                         animationSpec = tween(
                             durationMillis = durationRightRotationMillis,
                             delayMillis = initialDelayMillis,
@@ -167,8 +167,8 @@ fun HorVerRotationAnimation(
                         block = { value, _ -> yRotation = value }
                     )
                     animate(
-                        initialLeftRotationValue,
-                        targetLeftRotationValue,
+                        initialValue = initialLeftRotationValue,
+                        targetValue = targetLeftRotationValue,
                         animationSpec = tween(
                             durationMillis = durationLeftRotationMillis,
                             delayMillis = endDelayMillis,
@@ -182,8 +182,8 @@ fun HorVerRotationAnimation(
         } else {
             if (firstHorizontal) {
                 animate(
-                    initialRightRotationValue,
-                    targetRightRotationValue,
+                    initialValue = initialRightRotationValue,
+                    targetValue = targetRightRotationValue,
                     animationSpec = tween(
                         durationMillis = durationRightRotationMillis,
                         delayMillis = initialDelayMillis,
@@ -192,8 +192,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> yRotation = value }
                 )
                 animate(
-                    initialLeftRotationValue,
-                    targetLeftRotationValue,
+                    initialValue = initialLeftRotationValue,
+                    targetValue = targetLeftRotationValue,
                     animationSpec = tween(
                         durationMillis = durationLeftRotationMillis,
                         delayMillis = endDelayMillis,
@@ -202,8 +202,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> yRotation = value }
                 )
                 animate(
-                    initialUpRotationValue,
-                    targetUpRotationValue,
+                    initialValue = initialUpRotationValue,
+                    targetValue = targetUpRotationValue,
                     animationSpec = tween(
                         durationMillis = durationRightRotationMillis,
                         delayMillis = initialDelayMillis,
@@ -212,8 +212,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> xRotation = value }
                 )
                 animate(
-                    initialDownRotationValue,
-                    targetDownRotationValue,
+                    initialValue = initialDownRotationValue,
+                    targetValue = targetDownRotationValue,
                     animationSpec = tween(
                         durationMillis = durationLeftRotationMillis,
                         delayMillis = endDelayMillis,
@@ -224,8 +224,8 @@ fun HorVerRotationAnimation(
                 delay(timeMillis = delayInfinityMillis)
             } else {
                 animate(
-                    initialUpRotationValue,
-                    targetUpRotationValue,
+                    initialValue = initialUpRotationValue,
+                    targetValue = targetUpRotationValue,
                     animationSpec = tween(
                         durationMillis = durationRightRotationMillis,
                         delayMillis = initialDelayMillis,
@@ -234,8 +234,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> xRotation = value }
                 )
                 animate(
-                    initialDownRotationValue,
-                    targetDownRotationValue,
+                    initialValue = initialDownRotationValue,
+                    targetValue = targetDownRotationValue,
                     animationSpec = tween(
                         durationMillis = durationLeftRotationMillis,
                         delayMillis = endDelayMillis,
@@ -244,8 +244,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> xRotation = value }
                 )
                 animate(
-                    initialRightRotationValue,
-                    targetRightRotationValue,
+                    initialValue = initialRightRotationValue,
+                    targetValue = targetRightRotationValue,
                     animationSpec = tween(
                         durationMillis = durationRightRotationMillis,
                         delayMillis = initialDelayMillis,
@@ -254,8 +254,8 @@ fun HorVerRotationAnimation(
                     block = { value, _ -> yRotation = value }
                 )
                 animate(
-                    initialLeftRotationValue,
-                    targetLeftRotationValue,
+                    initialValue = initialLeftRotationValue,
+                    targetValue = targetLeftRotationValue,
                     animationSpec = tween(
                         durationMillis = durationLeftRotationMillis,
                         delayMillis = endDelayMillis,

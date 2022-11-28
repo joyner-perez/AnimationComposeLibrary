@@ -11,12 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.joyner.animationcomposelibrary.HorVerRotationAnimation
-import com.joyner.animationcomposelibrary.HorizontalRotationAnimation
-import com.joyner.animationcomposelibrary.MiddleHorVerRotationAnimation
-import com.joyner.animationcomposelibrary.VerticalRotationAnimation
 import com.joyner.animationcomposelibrary.move.MoveAnimation
 import com.joyner.animationcomposelibrary.move.MoveWithComeBackAnimation
+import com.joyner.animationcomposelibrary.rotation.*
 import com.joyner.animationmaterial3.ui.theme.AnimationMaterial3Theme
 
 class MainActivity : ComponentActivity() {
@@ -39,28 +36,35 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String) {
-    HorizontalRotationAnimation(
+    ExeYRotationAnimation(
         infinity = true,
         delayInfinityMillis = 1000
     ) {
         Text(text = "Hello $name!")
     }
 
-    VerticalRotationAnimation(
+    ExeXRotationAnimation(
         infinity = true,
         delayInfinityMillis = 1000
     ) {
         Text(text = "Hello $name!")
     }
 
-    HorVerRotationAnimation(
+    ExeXYRotationAnimation(
         infinity = true,
         delayInfinityMillis = 1000
     ) {
         Text(text = "Hello $name!")
     }
 
-    MiddleHorVerRotationAnimation(
+    MiddleExeXYRotationAnimation(
+        infinity = true,
+        delayInfinityMillis = 1000
+    ) {
+        Text(text = "Hello $name!")
+    }
+
+    AngleRotationAnimation(
         infinity = true,
         delayInfinityMillis = 1000
     ) {

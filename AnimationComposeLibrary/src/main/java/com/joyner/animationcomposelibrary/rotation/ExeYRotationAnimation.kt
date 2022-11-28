@@ -1,4 +1,4 @@
-package com.joyner.animationcomposelibrary
+package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
@@ -13,31 +13,31 @@ import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
 
 /**
- *  A rotate vertical animation for composable views.
+ *  A rotate horizontal animation for composable views.
  *
  *  Examples usage:
  *
  * ```
- *  VerticalRotationAnimation() {
+ *  HorizontalRotationAnimation() {
  *      Text(text = "Hello World!")
  *  }
  *  ```
  *
  *  ```
- *  VerticalRotationAnimation(
+ *  HorizontalRotationAnimation(
  *      infinity = true,
- *      delayInfinityMillis = 1000,
+ *      delayInfinityMillis = 1000
  *  ) {
  *      Text(text = "Hello World!")
  *  }
  *  ```
  *
  *  ```
- *  VerticalRotationAnimation(
+ *  HorizontalRotationAnimation(
  *      infinity = true,
  *      delayInfinityMillis = 1000,
- *      initialUpRotationValue = 180f,
- *      targetDownRotationValue = 0f,
+ *      initialLeftRotationValue = 180f,
+ *      targetLeftRotationValue = 0f
  *  ) {
  *      Text(text = "Hello World!")
  *  }
@@ -46,38 +46,38 @@ import kotlinx.coroutines.delay
  *  @param modifier [Modifier] optional modifier for the animation.
  *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
  *  @param delayInfinityMillis [Long] optional delay in millis between repeat animations.
- *  @param initialUpRotationValue [Float] optional initial rotation value for the up side.
- *  @param targetUpRotationValue [Float] optional target rotation value for the up side.
- *  @param initialDownRotationValue [Float] optional initial rotation value for the down side.
- *  @param targetDownRotationValue [Float] optional target rotation value for the down side.
- *  @param durationUpRotationMillis [Int] optional duration to rotate to the up side.
- *  @param durationDownRotationMillis [Int] optional duration to rotate to the down side.
- *  @param initialDelayMillis [Int] optional duration to start animation.
- *  @param endDelayMillis [Int] optional duration to start the second part of animation.
- *  @param easingUpRotation [Easing] optional easing rotation value for the up side.
- *  @param easingDownRotation [Easing] optional easing rotation value for the down side.
+ *  @param initialRightRotationValue [Float] optional initial rotation value for the right side.
+ *  @param targetRightRotationValue [Float] optional target rotation value for the right side.
+ *  @param initialLeftRotationValue [Float] optional initial rotation value for the left side.
+ *  @param targetLeftRotationValue [Float] optional target rotation value for the left side.
+ *  @param durationRightRotationMillis [Int] optional duration to rotate to the right side.
+ *  @param durationLeftRotationMillis [Int] optional duration to rotate to the left side.
+ *  @param initialDelayMillis [Int] optional delay to start animation.
+ *  @param endDelayMillis [Int] optional delay to start the second part of animation.
+ *  @param easingRightRotation [Easing] optional easing rotation value for the right side.
+ *  @param easingLeftRotation [Easing] optional easing rotation value for the left side.
  *  @param content [Composable] the composable element you want to animate.
  *
  *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
  */
 @Composable
-fun VerticalRotationAnimation(
+fun ExeYRotationAnimation(
     modifier: Modifier = Modifier,
     infinity: Boolean = false,
     delayInfinityMillis: Long = 0,
-    initialUpRotationValue: Float = 0f,
-    targetUpRotationValue: Float = 180f,
-    initialDownRotationValue: Float = 180f,
-    targetDownRotationValue: Float = 360f,
-    durationUpRotationMillis: Int = 1000,
-    durationDownRotationMillis: Int = 1000,
+    initialRightRotationValue: Float = 0f,
+    targetRightRotationValue: Float = 180f,
+    initialLeftRotationValue: Float = 180f,
+    targetLeftRotationValue: Float = 360f,
+    durationRightRotationMillis: Int = 1000,
+    durationLeftRotationMillis: Int = 1000,
     initialDelayMillis: Int = 0,
     endDelayMillis: Int = 0,
-    easingUpRotation: Easing = LinearEasing,
-    easingDownRotation: Easing = LinearEasing,
+    easingRightRotation: Easing = LinearEasing,
+    easingLeftRotation: Easing = LinearEasing,
     content: @Composable () -> Unit
 ) {
-    var xRotation by rememberSaveable {
+    var yRotation by rememberSaveable {
         mutableStateOf(0f)
     }
 
@@ -85,47 +85,47 @@ fun VerticalRotationAnimation(
         if (infinity) {
             while (true) {
                 animate(
-                    initialUpRotationValue,
-                    targetUpRotationValue,
+                    initialValue = initialRightRotationValue,
+                    targetValue = targetRightRotationValue,
                     animationSpec = tween(
-                        durationMillis = durationUpRotationMillis,
+                        durationMillis = durationRightRotationMillis,
                         delayMillis = initialDelayMillis,
-                        easing = easingUpRotation
+                        easing = easingRightRotation
                     ),
-                    block = { value, _ -> xRotation = value }
+                    block = { value, _ -> yRotation = value }
                 )
                 animate(
-                    initialDownRotationValue,
-                    targetDownRotationValue,
+                    initialValue = initialLeftRotationValue,
+                    targetValue = targetLeftRotationValue,
                     animationSpec = tween(
-                        durationMillis = durationDownRotationMillis,
+                        durationMillis = durationLeftRotationMillis,
                         delayMillis = endDelayMillis,
-                        easing = easingDownRotation
+                        easing = easingLeftRotation
                     ),
-                    block = { value, _ -> xRotation = value }
+                    block = { value, _ -> yRotation = value }
                 )
                 delay(timeMillis = delayInfinityMillis)
             }
         } else {
             animate(
-                0f,
-                180f,
+                initialValue = 0f,
+                targetValue = 180f,
                 animationSpec = tween(
                     durationMillis = 1000,
                     delayMillis = 1000,
                     easing = LinearEasing
                 ),
-                block = { value, _ -> xRotation = value }
+                block = { value, _ -> yRotation = value }
             )
             animate(
-                180f,
-                360f,
+                initialValue = 180f,
+                targetValue = 360f,
                 animationSpec = tween(
                     durationMillis = 1000,
                     delayMillis = endDelayMillis,
                     easing = LinearEasing
                 ),
-                block = { value, _ -> xRotation = value }
+                block = { value, _ -> yRotation = value }
             )
         }
     }
@@ -133,7 +133,7 @@ fun VerticalRotationAnimation(
     Box(modifier = modifier
         .wrapContentSize()
         .graphicsLayer {
-            rotationX = xRotation
+            rotationY = yRotation
         }
     ) {
         content()

@@ -28,7 +28,7 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
  *
  *  ```
  *  MoveAnimation(
- *      delayInfinityMillis = 1000,
+ *      delayInfinityMillis = 1000
  *  ) {
  *      Text(text = "Hello World!")
  *  }
