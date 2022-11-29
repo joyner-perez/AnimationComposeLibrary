@@ -4,12 +4,8 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
 
 /**
@@ -43,7 +39,6 @@ import kotlinx.coroutines.delay
  *  }
  *  ```
  *
- *  @param modifier [Modifier] optional modifier for the animation.
  *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
  *  @param delayInfinityMillis [Long] optional delay in millis between repeat animations.
  *  @param initialDegreeValue [Float] optional initial degree value.
@@ -53,11 +48,10 @@ import kotlinx.coroutines.delay
  *  @param easingRotation [Easing] optional easing of animation.
  *  @param content [Composable] the composable element you want to animate.
  *
- *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
+ *  @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
 fun AngleRotationAnimation(
-    modifier: Modifier = Modifier,
     infinity: Boolean = false,
     delayInfinityMillis: Long = 0,
     initialDegreeValue: Float = 0f,
@@ -65,7 +59,7 @@ fun AngleRotationAnimation(
     durationRotationMillis: Int = 1000,
     initialDelayMillis: Int = 0,
     easingRotation: Easing = LinearEasing,
-    content: @Composable () -> Unit
+    content: @Composable (rotationDegree: Float) -> Unit
 ) {
     var rotationDegree by rememberSaveable {
         mutableStateOf(0f)
@@ -100,10 +94,5 @@ fun AngleRotationAnimation(
         }
     }
 
-    Box(modifier = modifier
-        .wrapContentSize()
-        .graphicsLayer(rotationZ = rotationDegree)
-    ) {
-        content()
-    }
+    content(rotationDegree = rotationDegree)
 }

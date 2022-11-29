@@ -4,12 +4,8 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.graphicsLayer
 import kotlinx.coroutines.delay
 
 /**
@@ -43,7 +39,6 @@ import kotlinx.coroutines.delay
  *  }
  *  ```
  *
- *  @param modifier [Modifier] optional modifier for the animation.
  *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
  *  @param delayInfinityMillis [Long] optional delay in millis between repeat animations.
  *  @param initialRightRotationValue [Float] optional initial rotation value for the right side.
@@ -58,11 +53,10 @@ import kotlinx.coroutines.delay
  *  @param easingLeftRotation [Easing] optional easing rotation value for the left side.
  *  @param content [Composable] the composable element you want to animate.
  *
- *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
+ *  @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
 fun ExeYRotationAnimation(
-    modifier: Modifier = Modifier,
     infinity: Boolean = false,
     delayInfinityMillis: Long = 0,
     initialRightRotationValue: Float = 0f,
@@ -75,7 +69,7 @@ fun ExeYRotationAnimation(
     endDelayMillis: Int = 0,
     easingRightRotation: Easing = LinearEasing,
     easingLeftRotation: Easing = LinearEasing,
-    content: @Composable () -> Unit
+    content: @Composable (yRotation: Float) -> Unit
 ) {
     var yRotation by rememberSaveable {
         mutableStateOf(0f)
@@ -130,12 +124,5 @@ fun ExeYRotationAnimation(
         }
     }
 
-    Box(modifier = modifier
-        .wrapContentSize()
-        .graphicsLayer {
-            rotationY = yRotation
-        }
-    ) {
-        content()
-    }
+    content(yRotation = yRotation)
 }

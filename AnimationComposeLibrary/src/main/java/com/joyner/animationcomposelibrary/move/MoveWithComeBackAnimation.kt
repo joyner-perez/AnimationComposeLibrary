@@ -4,13 +4,9 @@ import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
@@ -45,7 +41,6 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
  *  }
  *  ```
  *
- *  @param modifier [Modifier] optional modifier for the animation.
  *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
  *  @param delayInfinityMillis [Int] optional delay in millis between repeat animation.
  *  @param initialAnimationValue [Dp] optional initial distance of animation.
@@ -55,11 +50,10 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
  *  @param direction [EnumMoveDirection] optional direction of animation.
  *  @param content [Composable] the composable element you want to animate.
  *
- *  @author Joyner Pérez Echevarria (https://github.com/joyner-perez)
+ *  @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
 fun MoveWithComeBackAnimation(
-    modifier: Modifier = Modifier,
     infinity: Boolean = false,
     delayInfinityMillis: Int = 0,
     initialAnimationValue: Dp = 0.dp,
@@ -67,7 +61,7 @@ fun MoveWithComeBackAnimation(
     durationInMillis: Int = 1000,
     easingValue: Easing = LinearEasing,
     direction: EnumMoveDirection = RIGHT,
-    content: @Composable () -> Unit
+    content: @Composable (paddingValue: PaddingValues) -> Unit
 ) {
     var endAnimation by rememberSaveable { mutableStateOf(false) }
     var moveTo by rememberSaveable { mutableStateOf(true) }
@@ -88,17 +82,14 @@ fun MoveWithComeBackAnimation(
         }
     )
 
-    Box(modifier = modifier
-        .wrapContentSize()
-        .padding(paddingValues = when (direction) {
+    content(
+        paddingValue = when (direction) {
             RIGHT -> PaddingValues(start = animationMoveTo)
             LEFT -> PaddingValues(end = animationMoveTo)
             UP -> PaddingValues(bottom = animationMoveTo)
             DOWN -> PaddingValues(top = animationMoveTo)
-        })
-    ) {
-        content()
-    }
+        }
+    )
 
     LaunchedEffect(key1 = Unit) {
         moveTo = !moveTo
