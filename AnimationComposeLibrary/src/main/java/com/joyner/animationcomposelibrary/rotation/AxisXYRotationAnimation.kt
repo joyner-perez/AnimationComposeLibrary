@@ -8,7 +8,7 @@ import com.joyner.animationcomposelibrary.core.getAnimationSpec
 import kotlinx.coroutines.delay
 
 /**
- * Middle exe xy rotation animation
+ * Axis x y rotation animation
  *
  * @param defaultValuesAnimation[DefaultComplexAnimation] required default
  *     configuration values of animation.
@@ -19,7 +19,7 @@ import kotlinx.coroutines.delay
  * @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
-fun MiddleExeXYRotationAnimation(
+fun AxisXYRotationAnimation(
     defaultValuesAnimation: DefaultComplexAnimation,
     firstHorizontal: Boolean = true,
     content: @Composable (xRotation: Float, yRotation: Float) -> Unit
@@ -38,24 +38,12 @@ fun MiddleExeXYRotationAnimation(
                     if (firstHorizontal) {
                         animate(
                             initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
                             targetValue = 360f,
                             animationSpec = getAnimationSpec(defaultValuesAnimation),
                             block = { value, _ -> yRotation = value }
                         )
                         animate(
-                            initialValue = 180f,
+                            initialValue = 0f,
                             targetValue = 360f,
                             animationSpec = getAnimationSpec(defaultValuesAnimation),
                             block = { value, _ -> xRotation = value }
@@ -64,24 +52,12 @@ fun MiddleExeXYRotationAnimation(
                     } else {
                         animate(
                             initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
                             targetValue = 360f,
                             animationSpec = getAnimationSpec(defaultValuesAnimation),
                             block = { value, _ -> xRotation = value }
                         )
                         animate(
-                            initialValue = 180f,
+                            initialValue = 0f,
                             targetValue = 360f,
                             animationSpec = getAnimationSpec(defaultValuesAnimation),
                             block = { value, _ -> yRotation = value }
@@ -93,24 +69,12 @@ fun MiddleExeXYRotationAnimation(
                 if (firstHorizontal) {
                     animate(
                         initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
                         targetValue = 360f,
                         animationSpec = getAnimationSpec(defaultValuesAnimation),
                         block = { value, _ -> yRotation = value }
                     )
                     animate(
-                        initialValue = 180f,
+                        initialValue = 0f,
                         targetValue = 360f,
                         animationSpec = getAnimationSpec(defaultValuesAnimation),
                         block = { value, _ -> xRotation = value }
@@ -118,24 +82,12 @@ fun MiddleExeXYRotationAnimation(
                 } else {
                     animate(
                         initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
                         targetValue = 360f,
                         animationSpec = getAnimationSpec(defaultValuesAnimation),
                         block = { value, _ -> xRotation = value }
                     )
                     animate(
-                        initialValue = 180f,
+                        initialValue = 0f,
                         targetValue = 360f,
                         animationSpec = getAnimationSpec(defaultValuesAnimation),
                         block = { value, _ -> yRotation = value }

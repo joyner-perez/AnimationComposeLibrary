@@ -1,12 +1,12 @@
 package com.joyner.animationcomposelibrary.move
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
+import com.joyner.animationcomposelibrary.core.getAnimationSpec
 import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
 
 /**
@@ -25,25 +25,23 @@ fun MoveAnimation(
     direction: EnumMoveDirection,
     content: @Composable (paddingValue: PaddingValues) -> Unit
 ) {
-    val animationMoveTo by animateDpAsState(
+    val animationMoveTo by animateFloatAsState(
         targetValue = if (defaultValuesAnimation.animate) {
-            defaultValuesAnimation.targetValue.dp
+            defaultValuesAnimation.targetValue
         } else {
-            defaultValuesAnimation.initValue.dp
+            defaultValuesAnimation.initValue
         },
-        animationSpec = tween(
-            durationMillis = defaultValuesAnimation.durationInMillis,
-            delayMillis = defaultValuesAnimation.delayInitInMillis,
-            easing = defaultValuesAnimation.easingValue
+        animationSpec = getAnimationSpec(
+            defaultValuesAnimation = defaultValuesAnimation
         )
     )
 
     content(
         paddingValue = when (direction) {
-            RIGHT -> PaddingValues(start = animationMoveTo)
-            LEFT -> PaddingValues(end = animationMoveTo)
-            UP -> PaddingValues(bottom = animationMoveTo)
-            DOWN -> PaddingValues(top = animationMoveTo)
+            RIGHT -> PaddingValues(start = animationMoveTo.dp)
+            LEFT -> PaddingValues(end = animationMoveTo.dp)
+            UP -> PaddingValues(bottom = animationMoveTo.dp)
+            DOWN -> PaddingValues(top = animationMoveTo.dp)
         }
     )
 }

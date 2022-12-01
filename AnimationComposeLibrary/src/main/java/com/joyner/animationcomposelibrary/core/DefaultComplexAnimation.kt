@@ -6,7 +6,7 @@ import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 
 /**
- * Default values configuration animation
+ * Default values configuration complex animation
  *
  * @property infinity[Boolean] optional flag to indicate if the animation should be infinite.
  * @property delayInfinityMillis[Int] optional delay in millis between animations.
@@ -14,32 +14,26 @@ import androidx.compose.animation.core.tween
  * @property delayInitInMillis[Int] optional delay in millis init animation.
  * @property easingValue[Easing] optional easing move value of animation.
  * @property animate[Boolean] required flag to animate the content parameter.
- * @property initValue[Float] required init value of animation.
- * @property targetValue[Float] required init value of animation.
  * @property onAnimateTo[([Boolean]) -> Unit] required callback when animation is
  *     expanded.
  * @constructor Default values for configuration of animation.
  *
  * @author Joyner (https://github.com/joyner-perez)
  */
-data class DefaultValuesAnimation(
+data class DefaultComplexAnimation(
     val infinity: Boolean = false,
     val delayInfinityMillis: Int = 0,
     val durationInMillis: Int = 1000,
     val delayInitInMillis: Int = 0,
     val easingValue: Easing = LinearEasing,
     val animate: Boolean,
-    val initValue: Float,
-    val targetValue: Float,
     val onAnimateTo: (result: Boolean) -> Unit,
 )
 
 fun getAnimationSpec(
-    defaultValuesAnimation: DefaultValuesAnimation,
-    durationInMillis: Int = defaultValuesAnimation.durationInMillis,
-    delayInitInMillis: Int = defaultValuesAnimation.delayInitInMillis,
+    defaultValuesAnimation: DefaultComplexAnimation,
 ): AnimationSpec<Float> = tween(
-    durationMillis = durationInMillis,
-    delayMillis = delayInitInMillis,
+    durationMillis = defaultValuesAnimation.durationInMillis,
+    delayMillis = defaultValuesAnimation.delayInitInMillis,
     easing = defaultValuesAnimation.easingValue
 )

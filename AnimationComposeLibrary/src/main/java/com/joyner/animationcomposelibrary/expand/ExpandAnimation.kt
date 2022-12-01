@@ -1,10 +1,10 @@
 package com.joyner.animationcomposelibrary.expand
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
+import com.joyner.animationcomposelibrary.core.getAnimationSpec
 
 /**
  * Expand animation
@@ -26,10 +26,8 @@ fun ExpandAnimation(
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = tween(
-            durationMillis = defaultValuesAnimation.durationInMillis,
-            delayMillis = defaultValuesAnimation.delayInitInMillis,
-            easing = defaultValuesAnimation.easingValue
+        animationSpec = getAnimationSpec(
+            defaultValuesAnimation = defaultValuesAnimation
         )
     )
 

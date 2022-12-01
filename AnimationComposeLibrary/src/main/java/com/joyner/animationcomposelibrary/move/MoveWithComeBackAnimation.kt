@@ -18,8 +18,6 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
  * @param defaultValuesAnimation[DefaultValuesAnimation] required default
  *     configuration values of animation.
  * @param direction[EnumMoveDirection] required direction of animation.
- * @param onMoveTo[() -> Unit] required callback when animation is
- *     moved.
  * @param content[Composable] required composable element you want to
  *     animate.
  * @author Joyner (https://github.com/joyner-perez)
@@ -28,7 +26,6 @@ import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
 fun MoveWithComeBackAnimation(
     defaultValuesAnimation: DefaultValuesAnimation,
     direction: EnumMoveDirection,
-    onMoveTo: (Boolean) -> Unit,
     content: @Composable (paddingValue: PaddingValues) -> Unit
 ) {
     var endAnimation by rememberSaveable { mutableStateOf(false) }
@@ -51,9 +48,9 @@ fun MoveWithComeBackAnimation(
         finishedListener = {
             endAnimation = it.value == defaultValuesAnimation.initValue
             if (defaultValuesAnimation.infinity) {
-                onMoveTo(defaultValuesAnimation.animate.not())
+                defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
             } else if (defaultValuesAnimation.animate) {
-                onMoveTo(defaultValuesAnimation.animate.not())
+                defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
             }
         }
     )

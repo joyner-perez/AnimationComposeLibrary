@@ -1,16 +1,16 @@
-package com.joyner.animationcomposelibrary.expand
+package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
-import com.joyner.animationcomposelibrary.core.getAnimationSpec
 
 /**
- * Expand with come back animation
+ * Axis rotation animation
  *
  * @param defaultValuesAnimation[DefaultValuesAnimation] required default
  *     configuration values of animation.
@@ -19,36 +19,34 @@ import com.joyner.animationcomposelibrary.core.getAnimationSpec
  * @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
-fun ExpandWithComeBackAnimation(
+fun AxisRotationAnimation(
     defaultValuesAnimation: DefaultValuesAnimation,
-    content: @Composable (size: Float) -> Unit
+    content: @Composable (rotationDegree: Float) -> Unit
 ) {
     var endAnimation by rememberSaveable { mutableStateOf(false) }
 
-    val animationExpandTo by animateFloatAsState(
+    val animationRotationDegreeTo by animateFloatAsState(
         targetValue = if (defaultValuesAnimation.animate) {
             defaultValuesAnimation.targetValue
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = getAnimationSpec(
-            defaultValuesAnimation = defaultValuesAnimation,
-            durationInMillis = defaultValuesAnimation.durationInMillis / 2,
-            delayInitInMillis = if (endAnimation && defaultValuesAnimation.infinity) {
+        animationSpec = tween(
+            durationMillis = defaultValuesAnimation.durationInMillis,
+            delayMillis = if (endAnimation && defaultValuesAnimation.infinity) {
                 defaultValuesAnimation.delayInfinityMillis
             } else {
-                0
-            }
+                defaultValuesAnimation.delayInitInMillis
+            },
+            easing = defaultValuesAnimation.easingValue
         ),
         finishedListener = {
-            endAnimation = it == defaultValuesAnimation.initValue
+            endAnimation = it == defaultValuesAnimation.targetValue
             if (defaultValuesAnimation.infinity) {
-                defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
-            } else if (defaultValuesAnimation.animate) {
                 defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
             }
         }
     )
 
-    content(size = animationExpandTo)
+    content(rotationDegree = animationRotationDegreeTo)
 }

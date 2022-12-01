@@ -21,13 +21,16 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.joyner.animationcomposelibrary.core.DefaultComplexAnimation
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
 import com.joyner.animationcomposelibrary.expand.ExpandAnimation
 import com.joyner.animationcomposelibrary.expand.ExpandWithComeBackAnimation
 import com.joyner.animationcomposelibrary.move.EnumMoveDirection
 import com.joyner.animationcomposelibrary.move.MoveAnimation
 import com.joyner.animationcomposelibrary.move.MoveWithComeBackAnimation
-import com.joyner.animationcomposelibrary.rotation.*
+import com.joyner.animationcomposelibrary.rotation.AxisRotationAnimation
+import com.joyner.animationcomposelibrary.rotation.AxisXYRotationAnimation
+import com.joyner.animationcomposelibrary.rotation.MiddleExeXYRotationAnimation
 import com.joyner.animationmaterial3.ui.theme.AnimationMaterial3Theme
 
 class MainActivity : ComponentActivity() {
@@ -56,102 +59,125 @@ fun AnimationExamples() {
         contentPadding = PaddingValues(16.dp)
     ) {
         item {
+            var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
-                ExeYRotationAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 1000
+                AxisRotationAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        animate = rotationDegreeTo,
+                        initValue = 0f,
+                        targetValue = 360f,
+                        onAnimateTo = { rotationDegreeTo = it },
+                    )
                 ) {
                     Text(
                         modifier = Modifier
+                            .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(rotationY = it),
-                        text = "ExeYRotationAnimation"
+                        text = "Axis Y Rotation Animation"
                     )
-                }
-            }
-        }
-        item {
-            ItemListDemo {
-                ExeXRotationAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 1000
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .graphicsLayer(rotationX = it),
-                        text = "ExeXRotationAnimation"
-                    )
-                }
-            }
-        }
-        item {
-            ItemListDemo {
-                ExeXYRotationAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 1000
-                ) { xRotation: Float, yRotation: Float ->
-                    Text(
-                        modifier = Modifier
-                            .graphicsLayer(
-                                rotationX = xRotation,
-                                rotationY = yRotation),
-                        text = "ExeXYRotationAnimation"
-                    )
-                }
-            }
-        }
-        item {
-            ItemListDemo {
-                MiddleExeXYRotationAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 1000
-                ) { xRotation: Float, yRotation: Float ->
-                    Text(
-                        modifier = Modifier
-                            .graphicsLayer(
-                                rotationX = xRotation,
-                                rotationY = yRotation),
-                        text = "MiddleExeXYRotationAnimation")
                 }
             }
         }
         item {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
-            var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
-                AngleRotationAnimation(
-                    infinity = infinity,
-                    delayInfinityMillis = 1000,
-                    rotationDegreeTo = rotationDegreeTo,
-                    onRotateDegreeTo = { rotationDegreeTo = it },
+                AxisRotationAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        animate = rotationDegreeTo,
+                        initValue = 0f,
+                        targetValue = 360f,
+                        onAnimateTo = { rotationDegreeTo = it }
+                    )
                 ) {
                     Text(
                         modifier = Modifier
                             .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(rotationZ = it),
-                        text = "AngleRotationAnimation"
+                            .graphicsLayer(rotationX = it),
+                        text = "Axis X Rotation Animation"
                     )
                 }
             }
         }
         item {
+            var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
+            ItemListDemo {
+                AxisRotationAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        infinity = false,
+                        animate = rotationDegreeTo,
+                        initValue = 0f,
+                        targetValue = 45f,
+                        onAnimateTo = { rotationDegreeTo = it }
+                    )
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .clickable { rotationDegreeTo = !rotationDegreeTo }
+                            .graphicsLayer(rotationZ = it),
+                        text = "Angle Rotation Animation"
+                    )
+                }
+            }
+        }
+        item {
+            var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
+            ItemListDemo {
+                AxisXYRotationAnimation(
+                    defaultValuesAnimation = DefaultComplexAnimation(
+                        infinity = false,
+                        animate = rotationDegreeTo,
+                        onAnimateTo = { rotationDegreeTo = it }
+                    )
+                ) { xRotation: Float, yRotation: Float ->
+                    Text(
+                        modifier = Modifier
+                            .clickable { rotationDegreeTo = !rotationDegreeTo }
+                            .graphicsLayer(
+                                rotationX = xRotation,
+                                rotationY = yRotation),
+                        text = "Axis XY Rotation Animation"
+                    )
+                }
+            }
+        }
+        item {
+            var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
+            ItemListDemo {
+                MiddleExeXYRotationAnimation(
+                    defaultValuesAnimation = DefaultComplexAnimation(
+                        infinity = false,
+                        animate = rotationDegreeTo,
+                        onAnimateTo = { rotationDegreeTo = it }
+                    )
+                ) { xRotation: Float, yRotation: Float ->
+                    Text(
+                        modifier = Modifier
+                            .clickable { rotationDegreeTo = !rotationDegreeTo }
+                            .graphicsLayer(
+                                rotationX = xRotation,
+                                rotationY = yRotation),
+                        text = "Middle Axis XY Rotation Animation")
+                }
+            }
+        }
+        item {
             var moveTo by rememberSaveable { mutableStateOf(false) }
-            var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 MoveWithComeBackAnimation(
                     defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = infinity,
+                        infinity = false,
                         animate = moveTo,
                         initValue = 0f,
-                        targetValue = 16f
+                        targetValue = 16f,
+                        onAnimateTo = { moveTo = it }
                     ),
-                    direction = EnumMoveDirection.RIGHT,
-                    onMoveTo = { moveTo = it },
+                    direction = EnumMoveDirection.RIGHT
                 ) {
                     Text(
                         modifier = Modifier
                             .clickable { moveTo = !moveTo }
                             .padding(it),
-                        text = "MoveWithComeBackAnimation"
+                        text = "Move With Come Back Animation"
                     )
                 }
             }
@@ -163,7 +189,8 @@ fun AnimationExamples() {
                     defaultValuesAnimation = DefaultValuesAnimation(
                         animate = moveTo,
                         initValue = 0f,
-                        targetValue = 16f
+                        targetValue = 16f,
+                        onAnimateTo = {}
                     ),
                     direction = EnumMoveDirection.RIGHT
                 ) {
@@ -183,7 +210,8 @@ fun AnimationExamples() {
                     defaultValuesAnimation = DefaultValuesAnimation(
                         animate = expandTo,
                         initValue = 24f,
-                        targetValue = 48f
+                        targetValue = 48f,
+                        onAnimateTo = {}
                     )
                 ) {
                     Icon(
@@ -205,9 +233,9 @@ fun AnimationExamples() {
                         infinity = infinity,
                         animate = expandTo,
                         initValue = 24f,
-                        targetValue = 48f
-                    ),
-                    onExpandTo = { expandTo = it }
+                        targetValue = 48f,
+                        onAnimateTo = { expandTo = it }
+                    )
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
