@@ -6,7 +6,7 @@ plugins {
 android {
     namespace 'com.joyner.animationcomposelibrary'
     compileSdk 33
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.1'
 
     defaultConfig {
         minSdk 21

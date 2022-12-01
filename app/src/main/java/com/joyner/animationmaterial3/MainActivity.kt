@@ -3,6 +3,7 @@ package com.joyner.animationmaterial3
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -10,14 +11,20 @@ import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
 import com.joyner.animationcomposelibrary.expand.ExpandAnimation
 import com.joyner.animationcomposelibrary.expand.ExpandWithComeBackAnimation
+import com.joyner.animationcomposelibrary.move.EnumMoveDirection
 import com.joyner.animationcomposelibrary.move.MoveAnimation
 import com.joyner.animationcomposelibrary.move.MoveWithComeBackAnimation
 import com.joyner.animationcomposelibrary.rotation.*
@@ -108,13 +115,18 @@ fun AnimationExamples() {
             }
         }
         item {
+            var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
+            var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AngleRotationAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 1000
+                    infinity = infinity,
+                    delayInfinityMillis = 1000,
+                    rotationDegreeTo = rotationDegreeTo,
+                    onRotateDegreeTo = { rotationDegreeTo = it },
                 ) {
                     Text(
                         modifier = Modifier
+                            .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(rotationZ = it),
                         text = "AngleRotationAnimation"
                     )
@@ -122,13 +134,22 @@ fun AnimationExamples() {
             }
         }
         item {
+            var moveTo by rememberSaveable { mutableStateOf(false) }
+            var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 MoveWithComeBackAnimation(
-                    infinity = true,
-                    delayInfinityMillis = 2000
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        infinity = infinity,
+                        animate = moveTo,
+                        initValue = 0f,
+                        targetValue = 16f
+                    ),
+                    direction = EnumMoveDirection.RIGHT,
+                    onMoveTo = { moveTo = it },
                 ) {
                     Text(
                         modifier = Modifier
+                            .clickable { moveTo = !moveTo }
                             .padding(it),
                         text = "MoveWithComeBackAnimation"
                     )
@@ -136,10 +157,19 @@ fun AnimationExamples() {
             }
         }
         item {
+            var moveTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
-                MoveAnimation {
+                MoveAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        animate = moveTo,
+                        initValue = 0f,
+                        targetValue = 16f
+                    ),
+                    direction = EnumMoveDirection.RIGHT
+                ) {
                     Text(
                         modifier = Modifier
+                            .clickable { moveTo = !moveTo }
                             .padding(it),
                         text = "MoveAnimation"
                     )
@@ -147,13 +177,18 @@ fun AnimationExamples() {
             }
         }
         item {
+            var expandTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 ExpandAnimation(
-                    initSize = 24f,
-                    targetSize = 48f
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        animate = expandTo,
+                        initValue = 24f,
+                        targetValue = 48f
+                    )
                 ) {
                     Icon(
                         modifier = Modifier
+                            .clickable { expandTo = !expandTo }
                             .size(it.dp),
                         imageVector = Icons.Outlined.Settings,
                         contentDescription = "Config"
@@ -162,23 +197,32 @@ fun AnimationExamples() {
             }
         }
         item {
+            var expandTo by rememberSaveable { mutableStateOf(false) }
+            var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 ExpandWithComeBackAnimation(
-                    infinity = true,
-                    initSize = 24f,
-                    targetSize = 48f
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        infinity = infinity,
+                        animate = expandTo,
+                        initValue = 24f,
+                        targetValue = 48f
+                    ),
+                    onExpandTo = { expandTo = it }
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             modifier = Modifier
+                                .clickable { infinity = !infinity }
                                 .size(it.dp),
                             imageVector = Icons.Outlined.Settings,
                             contentDescription = "Config"
                         )
 
                         Text(
+                            modifier = Modifier
+                                .clickable { expandTo = !expandTo },
                             fontSize = it.sp,
                             text = "Hello World!"
                         )

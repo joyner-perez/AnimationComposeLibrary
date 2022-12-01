@@ -1,83 +1,59 @@
 package com.joyner.animationcomposelibrary.move
 
-import androidx.compose.animation.core.Easing
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.unit.Dp
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
+import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
 import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
 
 /**
- *  A move animation for composable views.
+ * Move with come back animation
  *
- *  Examples usage:
- *
- * ```
- *  MoveWithComeBackAnimation() {
- *      Text(text = "Hello World!")
- *  }
- *  ```
- *
- *  ```
- *  MoveWithComeBackAnimation(
- *      infinity = true,
- *      delayInfinityMillis = 1000
- *  ) {
- *      Text(text = "Hello World!")
- *  }
- *  ```
- *
- *  ```
- *  MoveWithComeBackAnimation(
- *      infinity = true,
- *      delayInfinityMillis = 1000,
- *      direction = EnumMoveDirection.DOWN
- *  ) {
- *      Text(text = "Hello World!")
- *  }
- *  ```
- *
- *  @param infinity [Boolean] optional flag to indicate if the animation should be infinite.
- *  @param delayInfinityMillis [Int] optional delay in millis between repeat animation.
- *  @param initialAnimationValue [Dp] optional initial distance of animation.
- *  @param endAnimationValue [Dp] optional target distance of animation.
- *  @param durationInMillis [Int] optional duration of animation.
- *  @param easingValue [Easing] optional easing move value of animation.
- *  @param direction [EnumMoveDirection] optional direction of animation.
- *  @param content [Composable] the composable element you want to animate.
- *
- *  @author Joyner (https://github.com/joyner-perez)
+ * @param defaultValuesAnimation[DefaultValuesAnimation] required default
+ *     configuration values of animation.
+ * @param direction[EnumMoveDirection] required direction of animation.
+ * @param onMoveTo[() -> Unit] required callback when animation is
+ *     moved.
+ * @param content[Composable] required composable element you want to
+ *     animate.
+ * @author Joyner (https://github.com/joyner-perez)
  */
 @Composable
 fun MoveWithComeBackAnimation(
-    infinity: Boolean = false,
-    delayInfinityMillis: Int = 0,
-    initialAnimationValue: Dp = 0.dp,
-    endAnimationValue: Dp = 16.dp,
-    durationInMillis: Int = 1000,
-    easingValue: Easing = LinearEasing,
-    direction: EnumMoveDirection = RIGHT,
+    defaultValuesAnimation: DefaultValuesAnimation,
+    direction: EnumMoveDirection,
+    onMoveTo: (Boolean) -> Unit,
     content: @Composable (paddingValue: PaddingValues) -> Unit
 ) {
     var endAnimation by rememberSaveable { mutableStateOf(false) }
-    var moveTo by rememberSaveable { mutableStateOf(true) }
+
     val animationMoveTo by animateDpAsState(
-        targetValue = if (moveTo) initialAnimationValue else endAnimationValue,
+        targetValue = if (defaultValuesAnimation.animate) {
+            defaultValuesAnimation.targetValue.dp
+        } else {
+            defaultValuesAnimation.initValue.dp
+        },
         animationSpec = tween(
-            durationMillis = durationInMillis / 2,
-            delayMillis = if (endAnimation && infinity) delayInfinityMillis else 0,
-            easing = easingValue
+            durationMillis = defaultValuesAnimation.durationInMillis / 2,
+            delayMillis = if (endAnimation && defaultValuesAnimation.infinity) {
+                defaultValuesAnimation.delayInitInMillis
+            } else {
+                0
+            },
+            easing = defaultValuesAnimation.easingValue
         ),
         finishedListener = {
-            endAnimation = it.value == initialAnimationValue.value
-            if (infinity) {
-                moveTo = !moveTo
-            } else if (!moveTo) {
-                moveTo = !moveTo
+            endAnimation = it.value == defaultValuesAnimation.initValue
+            if (defaultValuesAnimation.infinity) {
+                onMoveTo(defaultValuesAnimation.animate.not())
+            } else if (defaultValuesAnimation.animate) {
+                onMoveTo(defaultValuesAnimation.animate.not())
             }
         }
     )
@@ -90,8 +66,4 @@ fun MoveWithComeBackAnimation(
             DOWN -> PaddingValues(top = animationMoveTo)
         }
     )
-
-    LaunchedEffect(key1 = Unit) {
-        moveTo = !moveTo
-    }
 }

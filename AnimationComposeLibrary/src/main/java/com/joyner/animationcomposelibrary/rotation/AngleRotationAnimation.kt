@@ -2,11 +2,13 @@ package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.Easing
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animate
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
-import kotlinx.coroutines.delay
+import androidx.compose.runtime.setValue
 
 /**
  *  A rotate horizontal animation for composable views.
@@ -45,7 +47,7 @@ import kotlinx.coroutines.delay
  *  @param targetDegreeValue [Float] optional target degree value.
  *  @param durationRotationMillis [Int] optional duration of animation.
  *  @param initialDelayMillis [Int] optional delay to start animation.
- *  @param easingRotation [Easing] optional easing of animation.
+ *  @param easingValue [Easing] optional easing of animation.
  *  @param content [Composable] the composable element you want to animate.
  *
  *  @author Joyner (https://github.com/joyner-perez)
@@ -53,46 +55,33 @@ import kotlinx.coroutines.delay
 @Composable
 fun AngleRotationAnimation(
     infinity: Boolean = false,
-    delayInfinityMillis: Long = 0,
+    delayInfinityMillis: Int = 0,
     initialDegreeValue: Float = 0f,
     targetDegreeValue: Float = 360f,
     durationRotationMillis: Int = 1000,
     initialDelayMillis: Int = 0,
-    easingRotation: Easing = LinearEasing,
+    easingValue: Easing = LinearEasing,
+    rotationDegreeTo: Boolean,
+    onRotateDegreeTo: (Boolean) -> Unit,
     content: @Composable (rotationDegree: Float) -> Unit
 ) {
-    var rotationDegree by rememberSaveable {
-        mutableStateOf(0f)
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        if (infinity) {
-            while (true) {
-                animate(
-                    initialValue = initialDegreeValue,
-                    targetValue = targetDegreeValue,
-                    animationSpec = tween(
-                        durationMillis = durationRotationMillis,
-                        delayMillis = initialDelayMillis,
-                        easing = easingRotation
-                    ),
-                    block = { value, _ -> rotationDegree = value }
-                )
-                delay(timeMillis = delayInfinityMillis)
+    var endAnimation by rememberSaveable { mutableStateOf(false) }
+    val animationRotationDegreeTo by animateFloatAsState(
+        targetValue = if (rotationDegreeTo) targetDegreeValue else initialDegreeValue,
+        animationSpec = tween(
+            durationMillis = durationRotationMillis,
+            delayMillis = if (endAnimation && infinity) delayInfinityMillis else initialDelayMillis,
+            easing = easingValue
+        ),
+        finishedListener = {
+            endAnimation = it == initialDegreeValue
+            if (infinity) {
+                onRotateDegreeTo(!rotationDegreeTo)
+            } else if (rotationDegreeTo) {
+                onRotateDegreeTo(!rotationDegreeTo)
             }
-        } else {
-            animate(
-                initialValue = initialDegreeValue,
-                targetValue = targetDegreeValue,
-                animationSpec = tween(
-                    durationMillis = durationRotationMillis,
-                    delayMillis = initialDelayMillis,
-                    easing = easingRotation
-                ),
-                block = { value, _ -> rotationDegree = value }
-            )
         }
-    }
+    )
 
-    content(rotationDegree = rotationDegree)
+    content(rotationDegree = animationRotationDegreeTo)
 }

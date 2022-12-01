@@ -6,7 +6,7 @@ plugins {
 android {
     namespace 'com.joyner.animationmaterial3'
     compileSdk 33
-    buildToolsVersion '33.0.0'
+    buildToolsVersion '33.0.1'
 
     defaultConfig {
         applicationId "com.joyner.animationmaterial3"
