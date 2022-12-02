@@ -32,6 +32,7 @@ data class DefaultValuesAnimation(
     val initValue: Float,
     val targetValue: Float,
     val onAnimateTo: (result: Boolean) -> Unit,
+    val onAnimationEnd: () -> Unit
 )
 
 fun getAnimationSpec(

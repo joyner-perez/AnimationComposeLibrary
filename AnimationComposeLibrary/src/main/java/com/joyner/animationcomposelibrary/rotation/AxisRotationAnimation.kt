@@ -45,6 +45,9 @@ fun AxisRotationAnimation(
             if (defaultValuesAnimation.infinity) {
                 defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
             }
+            if (defaultValuesAnimation.infinity.not()) {
+                defaultValuesAnimation.onAnimationEnd()
+            }
         }
     )
 

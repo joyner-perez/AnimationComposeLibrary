@@ -28,6 +28,7 @@ data class DefaultComplexAnimation(
     val easingValue: Easing = LinearEasing,
     val animate: Boolean,
     val onAnimateTo: (result: Boolean) -> Unit,
+    val onAnimationEnd: () -> Unit
 )
 
 fun getAnimationSpec(

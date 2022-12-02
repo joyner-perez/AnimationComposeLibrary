@@ -47,6 +47,9 @@ fun ExpandWithComeBackAnimation(
             } else if (defaultValuesAnimation.animate) {
                 defaultValuesAnimation.onAnimateTo(defaultValuesAnimation.animate.not())
             }
+            if (defaultValuesAnimation.infinity.not() && endAnimation) {
+                defaultValuesAnimation.onAnimationEnd()
+            }
         }
     )
 

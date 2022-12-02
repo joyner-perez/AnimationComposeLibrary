@@ -95,6 +95,7 @@ fun AxisXYRotationAnimation(
                 }
 
                 defaultValuesAnimation.onAnimateTo(false)
+                defaultValuesAnimation.onAnimationEnd()
             }
         }
     }

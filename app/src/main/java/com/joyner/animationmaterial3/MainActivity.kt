@@ -1,6 +1,8 @@
 package com.joyner.animationmaterial3
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -18,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,7 +47,7 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    AnimationExamples()
+                    AnimationExamples(LocalContext.current)
                 }
             }
         }
@@ -52,7 +55,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AnimationExamples() {
+fun AnimationExamples(context: Context) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -67,6 +70,7 @@ fun AnimationExamples() {
                         initValue = 0f,
                         targetValue = 360f,
                         onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -86,7 +90,8 @@ fun AnimationExamples() {
                         animate = rotationDegreeTo,
                         initValue = 0f,
                         targetValue = 360f,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -107,7 +112,8 @@ fun AnimationExamples() {
                         animate = rotationDegreeTo,
                         initValue = 0f,
                         targetValue = 45f,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -126,7 +132,8 @@ fun AnimationExamples() {
                     defaultValuesAnimation = DefaultComplexAnimation(
                         infinity = false,
                         animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
@@ -134,7 +141,8 @@ fun AnimationExamples() {
                             .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(
                                 rotationX = xRotation,
-                                rotationY = yRotation),
+                                rotationY = yRotation
+                            ),
                         text = "Axis XY Rotation Animation"
                     )
                 }
@@ -147,7 +155,8 @@ fun AnimationExamples() {
                     defaultValuesAnimation = DefaultComplexAnimation(
                         infinity = false,
                         animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
@@ -155,7 +164,8 @@ fun AnimationExamples() {
                             .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(
                                 rotationX = xRotation,
-                                rotationY = yRotation),
+                                rotationY = yRotation
+                            ),
                         text = "Middle Axis XY Rotation Animation")
                 }
             }
@@ -169,7 +179,8 @@ fun AnimationExamples() {
                         animate = moveTo,
                         initValue = 0f,
                         targetValue = 16f,
-                        onAnimateTo = { moveTo = it }
+                        onAnimateTo = { moveTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     ),
                     direction = EnumMoveDirection.RIGHT
                 ) {
@@ -190,7 +201,8 @@ fun AnimationExamples() {
                         animate = moveTo,
                         initValue = 0f,
                         targetValue = 16f,
-                        onAnimateTo = {}
+                        onAnimateTo = {},
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     ),
                     direction = EnumMoveDirection.RIGHT
                 ) {
@@ -211,7 +223,8 @@ fun AnimationExamples() {
                         animate = expandTo,
                         initValue = 24f,
                         targetValue = 48f,
-                        onAnimateTo = {}
+                        onAnimateTo = {},
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Icon(
@@ -234,7 +247,8 @@ fun AnimationExamples() {
                         animate = expandTo,
                         initValue = 24f,
                         targetValue = 48f,
-                        onAnimateTo = { expandTo = it }
+                        onAnimateTo = { expandTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Row(
@@ -263,9 +277,10 @@ fun AnimationExamples() {
 
 @Composable
 fun ItemListDemo(content: @Composable () -> Unit) {
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 16.dp),
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 16.dp),
         horizontalArrangement = Arrangement.Center
     ) {
         content()
@@ -276,6 +291,6 @@ fun ItemListDemo(content: @Composable () -> Unit) {
 @Composable
 fun DefaultPreview() {
     AnimationMaterial3Theme {
-        AnimationExamples()
+        AnimationExamples(LocalContext.current)
     }
 }

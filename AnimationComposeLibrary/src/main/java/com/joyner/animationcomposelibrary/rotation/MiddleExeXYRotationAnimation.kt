@@ -143,6 +143,7 @@ fun MiddleExeXYRotationAnimation(
                 }
 
                 defaultValuesAnimation.onAnimateTo(false)
+                defaultValuesAnimation.onAnimationEnd()
             }
         }
     }

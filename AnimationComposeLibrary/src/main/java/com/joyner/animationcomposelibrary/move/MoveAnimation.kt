@@ -33,7 +33,10 @@ fun MoveAnimation(
         },
         animationSpec = getAnimationSpec(
             defaultValuesAnimation = defaultValuesAnimation
-        )
+        ),
+        finishedListener = {
+            defaultValuesAnimation.onAnimationEnd()
+        }
     )
 
     content(

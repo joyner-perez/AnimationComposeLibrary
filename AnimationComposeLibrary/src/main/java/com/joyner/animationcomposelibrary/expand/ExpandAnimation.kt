@@ -28,7 +28,10 @@ fun ExpandAnimation(
         },
         animationSpec = getAnimationSpec(
             defaultValuesAnimation = defaultValuesAnimation
-        )
+        ),
+        finishedListener = {
+            defaultValuesAnimation.onAnimationEnd()
+        }
     )
 
     content(size = animationExpandTo)
