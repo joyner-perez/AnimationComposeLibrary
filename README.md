@@ -43,6 +43,7 @@ In the future I will be adding more animations, if you have any suggestion let m
                         initValue = 0f,
                         targetValue = 360f,
                         onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -62,7 +63,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = rotationDegreeTo,
                         initValue = 0f,
                         targetValue = 360f,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -83,7 +85,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = rotationDegreeTo,
                         initValue = 0f,
                         targetValue = 45f,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Text(
@@ -102,7 +105,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                     defaultValuesAnimation = DefaultComplexAnimation(
                         infinity = false,
                         animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
@@ -110,7 +114,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                             .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(
                                 rotationX = xRotation,
-                                rotationY = yRotation),
+                                rotationY = yRotation
+                            ),
                         text = "Axis XY Rotation Animation"
                     )
                 }
@@ -123,7 +128,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                     defaultValuesAnimation = DefaultComplexAnimation(
                         infinity = false,
                         animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it }
+                        onAnimateTo = { rotationDegreeTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
@@ -131,7 +137,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                             .clickable { rotationDegreeTo = !rotationDegreeTo }
                             .graphicsLayer(
                                 rotationX = xRotation,
-                                rotationY = yRotation),
+                                rotationY = yRotation
+                            ),
                         text = "Middle Axis XY Rotation Animation")
                 }
             }
@@ -145,7 +152,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = moveTo,
                         initValue = 0f,
                         targetValue = 16f,
-                        onAnimateTo = { moveTo = it }
+                        onAnimateTo = { moveTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     ),
                     direction = EnumMoveDirection.RIGHT
                 ) {
@@ -166,7 +174,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = moveTo,
                         initValue = 0f,
                         targetValue = 16f,
-                        onAnimateTo = {}
+                        onAnimateTo = {},
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     ),
                     direction = EnumMoveDirection.RIGHT
                 ) {
@@ -187,7 +196,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = expandTo,
                         initValue = 24f,
                         targetValue = 48f,
-                        onAnimateTo = {}
+                        onAnimateTo = {},
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Icon(
@@ -210,7 +220,8 @@ In the future I will be adding more animations, if you have any suggestion let m
                         animate = expandTo,
                         initValue = 24f,
                         targetValue = 48f,
-                        onAnimateTo = { expandTo = it }
+                        onAnimateTo = { expandTo = it },
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
                     )
                 ) {
                     Row(
@@ -234,4 +245,16 @@ In the future I will be adding more animations, if you have any suggestion let m
                 }
             }
         }
-    }        
+    }
+    
+    @Composable
+    fun ItemListDemo(content: @Composable () -> Unit) {
+    	Row(
+        	modifier = Modifier
+            	.fillMaxWidth()
+            	.padding(vertical = 16.dp),
+        	horizontalArrangement = Arrangement.Center
+    	) {
+        	content()
+    	}
+    }
