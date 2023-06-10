@@ -6,7 +6,14 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
@@ -19,11 +26,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.joyner.animationcomposelibrary.color.AlphaAnimation
+import com.joyner.animationcomposelibrary.color.AlphaWithComeBackAnimation
 import com.joyner.animationcomposelibrary.core.DefaultComplexAnimation
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
 import com.joyner.animationcomposelibrary.expand.ExpandAnimation
@@ -108,7 +118,6 @@ fun AnimationExamples(context: Context) {
             ItemListDemo {
                 AxisRotationAnimation(
                     defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = false,
                         animate = rotationDegreeTo,
                         initValue = 0f,
                         targetValue = 45f,
@@ -130,7 +139,6 @@ fun AnimationExamples(context: Context) {
             ItemListDemo {
                 AxisXYRotationAnimation(
                     defaultValuesAnimation = DefaultComplexAnimation(
-                        infinity = false,
                         animate = rotationDegreeTo,
                         onAnimateTo = { rotationDegreeTo = it },
                         onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
@@ -153,7 +161,6 @@ fun AnimationExamples(context: Context) {
             ItemListDemo {
                 MiddleExeXYRotationAnimation(
                     defaultValuesAnimation = DefaultComplexAnimation(
-                        infinity = false,
                         animate = rotationDegreeTo,
                         onAnimateTo = { rotationDegreeTo = it },
                         onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
@@ -175,7 +182,6 @@ fun AnimationExamples(context: Context) {
             ItemListDemo {
                 MoveWithComeBackAnimation(
                     defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = false,
                         animate = moveTo,
                         initValue = 0f,
                         targetValue = 16f,
@@ -266,6 +272,64 @@ fun AnimationExamples(context: Context) {
                             modifier = Modifier
                                 .clickable { expandTo = !expandTo },
                             fontSize = it.sp,
+                            text = "Hello World!"
+                        )
+                    }
+                }
+            }
+        }
+        item {
+            var expandTo by rememberSaveable { mutableStateOf(false) }
+            ItemListDemo {
+                AlphaAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        infinity = true,
+                        animate = expandTo,
+                        initValue = 1f,
+                        targetValue = 0f,
+                        onAnimateTo = {},
+                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
+                    )
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .clickable { expandTo = !expandTo }
+                            .alpha(it),
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = "Config"
+                    )
+                }
+            }
+        }
+        item {
+            var expandTo by rememberSaveable { mutableStateOf(false) }
+            var infinity by rememberSaveable { mutableStateOf(false) }
+            ItemListDemo {
+                AlphaWithComeBackAnimation(
+                    defaultValuesAnimation = DefaultValuesAnimation(
+                        infinity = infinity,
+                        animate = expandTo,
+                        initValue = 1f,
+                        targetValue = 0f,
+                        onAnimateTo = { expandTo = it },
+                        onAnimationEnd = {}
+                    )
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            modifier = Modifier
+                                .clickable { infinity = !infinity }
+                                .alpha(it),
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = "Config"
+                        )
+
+                        Text(
+                            modifier = Modifier
+                                .clickable { expandTo = !expandTo }
+                                .alpha(it),
                             text = "Hello World!"
                         )
                     }
