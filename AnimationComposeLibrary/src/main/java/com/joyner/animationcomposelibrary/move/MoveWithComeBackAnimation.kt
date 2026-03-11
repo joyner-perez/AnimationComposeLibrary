@@ -10,7 +10,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
-import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
 
 /**
  * Move with come back animation
@@ -28,7 +27,7 @@ fun MoveWithComeBackAnimation(
     direction: EnumMoveDirection,
     content: @Composable (paddingValue: PaddingValues) -> Unit
 ) {
-    var endAnimation by rememberSaveable { mutableStateOf(false) }
+    var endAnimation by rememberSaveable { mutableStateOf(value = false) }
 
     val animationMoveTo by animateDpAsState(
         targetValue = if (defaultValuesAnimation.animate) {
@@ -59,11 +58,11 @@ fun MoveWithComeBackAnimation(
     )
 
     content(
-        paddingValue = when (direction) {
-            RIGHT -> PaddingValues(start = animationMoveTo)
-            LEFT -> PaddingValues(end = animationMoveTo)
-            UP -> PaddingValues(bottom = animationMoveTo)
-            DOWN -> PaddingValues(top = animationMoveTo)
+        when (direction) {
+            EnumMoveDirection.RIGHT -> PaddingValues(start = animationMoveTo)
+            EnumMoveDirection.LEFT -> PaddingValues(end = animationMoveTo)
+            EnumMoveDirection.UP -> PaddingValues(bottom = animationMoveTo)
+            EnumMoveDirection.DOWN -> PaddingValues(top = animationMoveTo)
         }
     )
 }

@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
 import com.joyner.animationcomposelibrary.core.getAnimationSpec
-import com.joyner.animationcomposelibrary.move.EnumMoveDirection.*
 
 /**
  * Move animation
@@ -31,20 +30,16 @@ fun MoveAnimation(
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = getAnimationSpec(
-            defaultValuesAnimation = defaultValuesAnimation
-        ),
-        finishedListener = {
-            defaultValuesAnimation.onAnimationEnd()
-        }
+        animationSpec = getAnimationSpec(defaultValuesAnimation = defaultValuesAnimation),
+        finishedListener = { defaultValuesAnimation.onAnimationEnd() }
     )
 
     content(
-        paddingValue = when (direction) {
-            RIGHT -> PaddingValues(start = animationMoveTo.dp)
-            LEFT -> PaddingValues(end = animationMoveTo.dp)
-            UP -> PaddingValues(bottom = animationMoveTo.dp)
-            DOWN -> PaddingValues(top = animationMoveTo.dp)
+        when (direction) {
+            EnumMoveDirection.RIGHT -> PaddingValues(start = animationMoveTo.dp)
+            EnumMoveDirection.LEFT -> PaddingValues(end = animationMoveTo.dp)
+            EnumMoveDirection.UP -> PaddingValues(bottom = animationMoveTo.dp)
+            EnumMoveDirection.DOWN -> PaddingValues(top = animationMoveTo.dp)
         }
     )
 }

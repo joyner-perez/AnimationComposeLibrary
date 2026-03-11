@@ -26,13 +26,9 @@ fun ExpandAnimation(
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = getAnimationSpec(
-            defaultValuesAnimation = defaultValuesAnimation
-        ),
-        finishedListener = {
-            defaultValuesAnimation.onAnimationEnd()
-        }
+        animationSpec = getAnimationSpec(defaultValuesAnimation = defaultValuesAnimation),
+        finishedListener = { defaultValuesAnimation.onAnimationEnd() }
     )
 
-    content(size = animationExpandTo)
+    content(animationExpandTo)
 }

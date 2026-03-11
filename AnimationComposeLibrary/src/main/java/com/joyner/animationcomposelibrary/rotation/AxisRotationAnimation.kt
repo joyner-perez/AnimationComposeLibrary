@@ -23,7 +23,7 @@ fun AxisRotationAnimation(
     defaultValuesAnimation: DefaultValuesAnimation,
     content: @Composable (rotationDegree: Float) -> Unit
 ) {
-    var endAnimation by rememberSaveable { mutableStateOf(false) }
+    var endAnimation by rememberSaveable { mutableStateOf(value = false) }
 
     val animationRotationDegreeTo by animateFloatAsState(
         targetValue = if (defaultValuesAnimation.animate) {
@@ -51,5 +51,5 @@ fun AxisRotationAnimation(
         }
     )
 
-    content(rotationDegree = animationRotationDegreeTo)
+    content(animationRotationDegreeTo)
 }

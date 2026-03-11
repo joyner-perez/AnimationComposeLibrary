@@ -26,13 +26,9 @@ fun AlphaAnimation(
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = getAnimationSpec(
-            defaultValuesAnimation = defaultValuesAnimation
-        ),
-        finishedListener = {
-            defaultValuesAnimation.onAnimationEnd()
-        }
+        animationSpec = getAnimationSpec(defaultValuesAnimation = defaultValuesAnimation),
+        finishedListener = { defaultValuesAnimation.onAnimationEnd() }
     )
 
-    content(alpha = animationExpandTo)
+    content(animationExpandTo)
 }

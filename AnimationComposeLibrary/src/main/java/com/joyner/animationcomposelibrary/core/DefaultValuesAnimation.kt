@@ -32,15 +32,16 @@ data class DefaultValuesAnimation(
     val initValue: Float,
     val targetValue: Float,
     val onAnimateTo: (result: Boolean) -> Unit,
-    val onAnimationEnd: () -> Unit
+    val onAnimationEnd: () -> Unit,
 )
 
 fun getAnimationSpec(
     defaultValuesAnimation: DefaultValuesAnimation,
     durationInMillis: Int = defaultValuesAnimation.durationInMillis,
     delayInitInMillis: Int = defaultValuesAnimation.delayInitInMillis,
-): AnimationSpec<Float> = tween(
-    durationMillis = durationInMillis,
-    delayMillis = delayInitInMillis,
-    easing = defaultValuesAnimation.easingValue
-)
+): AnimationSpec<Float> =
+    tween(
+        durationMillis = durationInMillis,
+        delayMillis = delayInitInMillis,
+        easing = defaultValuesAnimation.easingValue,
+    )

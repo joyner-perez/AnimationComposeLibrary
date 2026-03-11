@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     AnimationExamples(LocalContext.current)
                 }
@@ -67,27 +67,30 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AnimationExamples(context: Context) {
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize(),
-        contentPadding = PaddingValues(16.dp)
+        modifier =
+            Modifier
+                .fillMaxSize(),
+        contentPadding = PaddingValues(16.dp),
     ) {
         item {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AxisRotationAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = rotationDegreeTo,
-                        initValue = 0f,
-                        targetValue = 360f,
-                        onAnimateTo = { rotationDegreeTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = rotationDegreeTo,
+                            initValue = 0f,
+                            targetValue = 360f,
+                            onAnimateTo = { rotationDegreeTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Text(
-                        modifier = Modifier
-                            .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(rotationY = it),
-                        text = "Axis Y Rotation Animation"
+                        modifier =
+                            Modifier
+                                .clickable { rotationDegreeTo = !rotationDegreeTo }
+                                .graphicsLayer(rotationY = it),
+                        text = "Axis Y Rotation Animation",
                     )
                 }
             }
@@ -96,19 +99,21 @@ fun AnimationExamples(context: Context) {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AxisRotationAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = rotationDegreeTo,
-                        initValue = 0f,
-                        targetValue = 360f,
-                        onAnimateTo = { rotationDegreeTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = rotationDegreeTo,
+                            initValue = 0f,
+                            targetValue = 360f,
+                            onAnimateTo = { rotationDegreeTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Text(
-                        modifier = Modifier
-                            .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(rotationX = it),
-                        text = "Axis X Rotation Animation"
+                        modifier =
+                            Modifier
+                                .clickable { rotationDegreeTo = !rotationDegreeTo }
+                                .graphicsLayer(rotationX = it),
+                        text = "Axis X Rotation Animation",
                     )
                 }
             }
@@ -117,19 +122,21 @@ fun AnimationExamples(context: Context) {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AxisRotationAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = rotationDegreeTo,
-                        initValue = 0f,
-                        targetValue = 45f,
-                        onAnimateTo = { rotationDegreeTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = rotationDegreeTo,
+                            initValue = 0f,
+                            targetValue = 45f,
+                            onAnimateTo = { rotationDegreeTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Text(
-                        modifier = Modifier
-                            .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(rotationZ = it),
-                        text = "Angle Rotation Animation"
+                        modifier =
+                            Modifier
+                                .clickable { rotationDegreeTo = !rotationDegreeTo }
+                                .graphicsLayer(rotationZ = it),
+                        text = "Angle Rotation Animation",
                     )
                 }
             }
@@ -138,20 +145,22 @@ fun AnimationExamples(context: Context) {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AxisXYRotationAnimation(
-                    defaultValuesAnimation = DefaultComplexAnimation(
-                        animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultComplexAnimation(
+                            animate = rotationDegreeTo,
+                            onAnimateTo = { rotationDegreeTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
-                        modifier = Modifier
-                            .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(
-                                rotationX = xRotation,
-                                rotationY = yRotation
-                            ),
-                        text = "Axis XY Rotation Animation"
+                        modifier =
+                            Modifier
+                                .clickable { rotationDegreeTo = !rotationDegreeTo }
+                                .graphicsLayer(
+                                    rotationX = xRotation,
+                                    rotationY = yRotation,
+                                ),
+                        text = "Axis XY Rotation Animation",
                     )
                 }
             }
@@ -160,20 +169,23 @@ fun AnimationExamples(context: Context) {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 MiddleExeXYRotationAnimation(
-                    defaultValuesAnimation = DefaultComplexAnimation(
-                        animate = rotationDegreeTo,
-                        onAnimateTo = { rotationDegreeTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultComplexAnimation(
+                            animate = rotationDegreeTo,
+                            onAnimateTo = { rotationDegreeTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
-                        modifier = Modifier
-                            .clickable { rotationDegreeTo = !rotationDegreeTo }
-                            .graphicsLayer(
-                                rotationX = xRotation,
-                                rotationY = yRotation
-                            ),
-                        text = "Middle Axis XY Rotation Animation")
+                        modifier =
+                            Modifier
+                                .clickable { rotationDegreeTo = !rotationDegreeTo }
+                                .graphicsLayer(
+                                    rotationX = xRotation,
+                                    rotationY = yRotation,
+                                ),
+                        text = "Middle Axis XY Rotation Animation",
+                    )
                 }
             }
         }
@@ -181,20 +193,22 @@ fun AnimationExamples(context: Context) {
             var moveTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 MoveWithComeBackAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = moveTo,
-                        initValue = 0f,
-                        targetValue = 16f,
-                        onAnimateTo = { moveTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    ),
-                    direction = EnumMoveDirection.RIGHT
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = moveTo,
+                            initValue = 0f,
+                            targetValue = 16f,
+                            onAnimateTo = { moveTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
+                    direction = EnumMoveDirection.RIGHT,
                 ) {
                     Text(
-                        modifier = Modifier
-                            .clickable { moveTo = !moveTo }
-                            .padding(it),
-                        text = "Move With Come Back Animation"
+                        modifier =
+                            Modifier
+                                .clickable { moveTo = !moveTo }
+                                .padding(it),
+                        text = "Move With Come Back Animation",
                     )
                 }
             }
@@ -203,20 +217,22 @@ fun AnimationExamples(context: Context) {
             var moveTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 MoveAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = moveTo,
-                        initValue = 0f,
-                        targetValue = 16f,
-                        onAnimateTo = {},
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    ),
-                    direction = EnumMoveDirection.RIGHT
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = moveTo,
+                            initValue = 0f,
+                            targetValue = 16f,
+                            onAnimateTo = {},
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
+                    direction = EnumMoveDirection.RIGHT,
                 ) {
                     Text(
-                        modifier = Modifier
-                            .clickable { moveTo = !moveTo }
-                            .padding(it),
-                        text = "MoveAnimation"
+                        modifier =
+                            Modifier
+                                .clickable { moveTo = !moveTo }
+                                .padding(it),
+                        text = "MoveAnimation",
                     )
                 }
             }
@@ -225,20 +241,22 @@ fun AnimationExamples(context: Context) {
             var expandTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 ExpandAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        animate = expandTo,
-                        initValue = 24f,
-                        targetValue = 48f,
-                        onAnimateTo = {},
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            animate = expandTo,
+                            initValue = 24f,
+                            targetValue = 48f,
+                            onAnimateTo = {},
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .clickable { expandTo = !expandTo }
-                            .size(it.dp),
+                        modifier =
+                            Modifier
+                                .clickable { expandTo = !expandTo }
+                                .size(it.dp),
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "Config"
+                        contentDescription = "Config",
                     )
                 }
             }
@@ -248,31 +266,34 @@ fun AnimationExamples(context: Context) {
             var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 ExpandWithComeBackAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = infinity,
-                        animate = expandTo,
-                        initValue = 24f,
-                        targetValue = 48f,
-                        onAnimateTo = { expandTo = it },
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = infinity,
+                            animate = expandTo,
+                            initValue = 24f,
+                            targetValue = 48f,
+                            onAnimateTo = { expandTo = it },
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            modifier = Modifier
-                                .clickable { infinity = !infinity }
-                                .size(it.dp),
+                            modifier =
+                                Modifier
+                                    .clickable { infinity = !infinity }
+                                    .size(it.dp),
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = "Config"
+                            contentDescription = "Config",
                         )
 
                         Text(
-                            modifier = Modifier
-                                .clickable { expandTo = !expandTo },
+                            modifier =
+                                Modifier
+                                    .clickable { expandTo = !expandTo },
                             fontSize = it.sp,
-                            text = "Hello World!"
+                            text = "Hello World!",
                         )
                     }
                 }
@@ -282,21 +303,23 @@ fun AnimationExamples(context: Context) {
             var expandTo by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AlphaAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = true,
-                        animate = expandTo,
-                        initValue = 1f,
-                        targetValue = 0f,
-                        onAnimateTo = {},
-                        onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() }
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = true,
+                            animate = expandTo,
+                            initValue = 1f,
+                            targetValue = 0f,
+                            onAnimateTo = {},
+                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                        ),
                 ) {
                     Icon(
-                        modifier = Modifier
-                            .clickable { expandTo = !expandTo }
-                            .alpha(it),
+                        modifier =
+                            Modifier
+                                .clickable { expandTo = !expandTo }
+                                .alpha(it),
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "Config"
+                        contentDescription = "Config",
                     )
                 }
             }
@@ -306,31 +329,34 @@ fun AnimationExamples(context: Context) {
             var infinity by rememberSaveable { mutableStateOf(false) }
             ItemListDemo {
                 AlphaWithComeBackAnimation(
-                    defaultValuesAnimation = DefaultValuesAnimation(
-                        infinity = infinity,
-                        animate = expandTo,
-                        initValue = 1f,
-                        targetValue = 0f,
-                        onAnimateTo = { expandTo = it },
-                        onAnimationEnd = {}
-                    )
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = infinity,
+                            animate = expandTo,
+                            initValue = 1f,
+                            targetValue = 0f,
+                            onAnimateTo = { expandTo = it },
+                            onAnimationEnd = {},
+                        ),
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
-                            modifier = Modifier
-                                .clickable { infinity = !infinity }
-                                .alpha(it),
+                            modifier =
+                                Modifier
+                                    .clickable { infinity = !infinity }
+                                    .alpha(it),
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = "Config"
+                            contentDescription = "Config",
                         )
 
                         Text(
-                            modifier = Modifier
-                                .clickable { expandTo = !expandTo }
-                                .alpha(it),
-                            text = "Hello World!"
+                            modifier =
+                                Modifier
+                                    .clickable { expandTo = !expandTo }
+                                    .alpha(it),
+                            text = "Hello World!",
                         )
                     }
                 }
@@ -342,10 +368,11 @@ fun AnimationExamples(context: Context) {
 @Composable
 fun ItemListDemo(content: @Composable () -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 16.dp),
-        horizontalArrangement = Arrangement.Center
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+        horizontalArrangement = Arrangement.Center,
     ) {
         content()
     }

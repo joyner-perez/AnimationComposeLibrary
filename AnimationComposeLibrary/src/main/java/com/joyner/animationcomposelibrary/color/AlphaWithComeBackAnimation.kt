@@ -23,7 +23,7 @@ fun AlphaWithComeBackAnimation(
     defaultValuesAnimation: DefaultValuesAnimation,
     content: @Composable (alpha: Float) -> Unit
 ) {
-    var endAnimation by rememberSaveable { mutableStateOf(false) }
+    var endAnimation by rememberSaveable { mutableStateOf(value = false) }
 
     val animationMoveTo by animateFloatAsState(
         targetValue = if (defaultValuesAnimation.animate) {
@@ -34,11 +34,12 @@ fun AlphaWithComeBackAnimation(
         animationSpec = getAnimationSpec(
             defaultValuesAnimation = defaultValuesAnimation,
             durationInMillis = defaultValuesAnimation.durationInMillis / 2,
-            delayInitInMillis = if (endAnimation && defaultValuesAnimation.infinity) {
-                defaultValuesAnimation.delayInfinityMillis
-            } else {
-                0
-            }
+            delayInitInMillis =
+                if (endAnimation && defaultValuesAnimation.infinity) {
+                    defaultValuesAnimation.delayInfinityMillis
+                } else {
+                    0
+                }
         ),
         finishedListener = {
             endAnimation = it == defaultValuesAnimation.initValue
@@ -53,5 +54,5 @@ fun AlphaWithComeBackAnimation(
         }
     )
 
-    content(alpha = animationMoveTo)
+    content(animationMoveTo)
 }

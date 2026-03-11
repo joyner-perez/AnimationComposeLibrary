@@ -23,7 +23,7 @@ fun ExpandWithComeBackAnimation(
     defaultValuesAnimation: DefaultValuesAnimation,
     content: @Composable (size: Float) -> Unit
 ) {
-    var endAnimation by rememberSaveable { mutableStateOf(false) }
+    var endAnimation by rememberSaveable { mutableStateOf(value = false) }
 
     val animationExpandTo by animateFloatAsState(
         targetValue = if (defaultValuesAnimation.animate) {
@@ -53,5 +53,5 @@ fun ExpandWithComeBackAnimation(
         }
     )
 
-    content(size = animationExpandTo)
+    content(animationExpandTo)
 }

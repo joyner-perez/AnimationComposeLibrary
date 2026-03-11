@@ -1,8 +1,12 @@
 package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.animate
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import com.joyner.animationcomposelibrary.core.DefaultComplexAnimation
 import com.joyner.animationcomposelibrary.core.getAnimationSpec
 import kotlinx.coroutines.delay
@@ -24,12 +28,8 @@ fun MiddleExeXYRotationAnimation(
     firstHorizontal: Boolean = true,
     content: @Composable (xRotation: Float, yRotation: Float) -> Unit
 ) {
-    var xRotation by rememberSaveable {
-        mutableStateOf(0f)
-    }
-    var yRotation by rememberSaveable {
-        mutableStateOf(0f)
-    }
+    var xRotation by rememberSaveable { mutableFloatStateOf(value = 0f) }
+    var yRotation by rememberSaveable { mutableFloatStateOf(value = 0f) }
 
     if (defaultValuesAnimation.animate) {
         LaunchedEffect(key1 = Unit) {
@@ -148,8 +148,5 @@ fun MiddleExeXYRotationAnimation(
         }
     }
 
-    content(
-        xRotation = xRotation,
-        yRotation = yRotation
-    )
+    content(xRotation, yRotation)
 }
