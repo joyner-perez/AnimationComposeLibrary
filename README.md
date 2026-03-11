@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/joyner-perez/AnimationComposeLibrary.svg)](https://jitpack.io/#joyner-perez/AnimationComposeLibrary)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.joyner-perez/AnimationComposeLibrary.svg)](https://central.sonatype.com/artifact/io.github.joyner-perez/AnimationComposeLibrary)
 # Android animation library for jetpack compose
 
 Android animations for compose, it will help you to create your animations and reduce the code you have to write.
@@ -12,19 +12,16 @@ In the future I will be adding more animations, if you have any suggestion let m
 
 ⚙️ How to install
 --
-1. Add it in your root build.gradle at the end of repositories:
+1. Make sure `mavenCentral()` is in your repositories (it is included by default in modern Android projects):
 
-		allprojects {
-			repositories {
-				...
-				maven { url 'https://jitpack.io' }
-			}
+		repositories {
+			mavenCentral()
 		}
 
 2. Add the dependency:
 
 		dependencies {
-			implementation 'com.github.joyner-perez:AnimationComposeLibrary:(insert latest version)'
+			implementation 'io.github.joyner-perez:AnimationComposeLibrary:(insert latest version)'
 		}
 
 🕹 How to use:
