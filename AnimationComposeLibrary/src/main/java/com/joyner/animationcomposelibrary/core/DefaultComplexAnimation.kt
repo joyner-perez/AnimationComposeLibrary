@@ -31,9 +31,7 @@ data class DefaultComplexAnimation(
     val onAnimationEnd: () -> Unit
 )
 
-fun getAnimationSpec(
-    defaultValuesAnimation: DefaultComplexAnimation,
-): AnimationSpec<Float> = tween(
+fun getAnimationSpec(defaultValuesAnimation: DefaultComplexAnimation): AnimationSpec<Float> = tween(
     durationMillis = defaultValuesAnimation.durationInMillis,
     delayMillis = defaultValuesAnimation.delayInitInMillis,
     easing = defaultValuesAnimation.easingValue

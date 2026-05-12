@@ -11,6 +11,8 @@ import com.joyner.animationcomposelibrary.core.DefaultComplexAnimation
 import com.joyner.animationcomposelibrary.core.getAnimationSpec
 import kotlinx.coroutines.delay
 
+private const val FullRotationDegrees = 360f
+
 /**
  * Axis x y rotation animation
  *
@@ -33,67 +35,22 @@ fun AxisXYRotationAnimation(
 
     if (defaultValuesAnimation.animate) {
         LaunchedEffect(key1 = Unit) {
+            val stages = listOf(0f to FullRotationDegrees)
             if (defaultValuesAnimation.infinity) {
                 while (true) {
-                    if (firstHorizontal) {
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        delay(timeMillis = defaultValuesAnimation.delayInfinityMillis.toLong())
-                    } else {
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        delay(timeMillis = defaultValuesAnimation.delayInfinityMillis.toLong())
-                    }
+                    runXYStages(stages, defaultValuesAnimation, firstHorizontal, {
+                        xRotation = it
+                    }, {
+                        yRotation =
+                            it
+                    })
+                    delay(defaultValuesAnimation.delayInfinityMillis.toLong())
                 }
             } else {
-                if (firstHorizontal) {
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                } else {
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                }
-
+                runXYStages(stages, defaultValuesAnimation, firstHorizontal, { xRotation = it }, {
+                    yRotation =
+                        it
+                })
                 defaultValuesAnimation.onAnimateTo(false)
                 defaultValuesAnimation.onAnimationEnd()
             }
@@ -101,4 +58,58 @@ fun AxisXYRotationAnimation(
     }
 
     content(xRotation, yRotation)
+}
+
+internal suspend fun runXYStages(
+    stages: List<Pair<Float, Float>>,
+    config: DefaultComplexAnimation,
+    firstHorizontal: Boolean,
+    setX: (Float) -> Unit,
+    setY: (Float) -> Unit
+) {
+    for ((from, to) in stages) {
+        if (firstHorizontal) {
+            animate(
+                initialValue = from,
+                targetValue = to,
+                animationSpec = getAnimationSpec(config)
+            ) {
+                    value,
+                    _
+                ->
+                setY(value)
+            }
+            animate(
+                initialValue = from,
+                targetValue = to,
+                animationSpec = getAnimationSpec(config)
+            ) {
+                    value,
+                    _
+                ->
+                setX(value)
+            }
+        } else {
+            animate(
+                initialValue = from,
+                targetValue = to,
+                animationSpec = getAnimationSpec(config)
+            ) {
+                    value,
+                    _
+                ->
+                setX(value)
+            }
+            animate(
+                initialValue = from,
+                targetValue = to,
+                animationSpec = getAnimationSpec(config)
+            ) {
+                    value,
+                    _
+                ->
+                setY(value)
+            }
+        }
+    }
 }

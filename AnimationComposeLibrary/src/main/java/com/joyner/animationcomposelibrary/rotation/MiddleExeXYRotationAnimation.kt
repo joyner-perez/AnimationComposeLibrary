@@ -1,6 +1,5 @@
 package com.joyner.animationcomposelibrary.rotation
 
-import androidx.compose.animation.core.animate
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -8,8 +7,10 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.joyner.animationcomposelibrary.core.DefaultComplexAnimation
-import com.joyner.animationcomposelibrary.core.getAnimationSpec
 import kotlinx.coroutines.delay
+
+private const val HalfRotationDegrees = 180f
+private const val FullRotationDegrees = 360f
 
 /**
  * Middle exe xy rotation animation
@@ -33,115 +34,26 @@ fun MiddleExeXYRotationAnimation(
 
     if (defaultValuesAnimation.animate) {
         LaunchedEffect(key1 = Unit) {
+            val stages =
+                listOf(
+                    0f to HalfRotationDegrees,
+                    HalfRotationDegrees to FullRotationDegrees
+                )
             if (defaultValuesAnimation.infinity) {
                 while (true) {
-                    if (firstHorizontal) {
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        delay(timeMillis = defaultValuesAnimation.delayInfinityMillis.toLong())
-                    } else {
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 0f,
-                            targetValue = 180f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> xRotation = value }
-                        )
-                        animate(
-                            initialValue = 180f,
-                            targetValue = 360f,
-                            animationSpec = getAnimationSpec(defaultValuesAnimation),
-                            block = { value, _ -> yRotation = value }
-                        )
-                        delay(timeMillis = defaultValuesAnimation.delayInfinityMillis.toLong())
-                    }
+                    runXYStages(stages, defaultValuesAnimation, firstHorizontal, {
+                        xRotation = it
+                    }, {
+                        yRotation =
+                            it
+                    })
+                    delay(defaultValuesAnimation.delayInfinityMillis.toLong())
                 }
             } else {
-                if (firstHorizontal) {
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                } else {
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 0f,
-                        targetValue = 180f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> xRotation = value }
-                    )
-                    animate(
-                        initialValue = 180f,
-                        targetValue = 360f,
-                        animationSpec = getAnimationSpec(defaultValuesAnimation),
-                        block = { value, _ -> yRotation = value }
-                    )
-                }
-
+                runXYStages(stages, defaultValuesAnimation, firstHorizontal, { xRotation = it }, {
+                    yRotation =
+                        it
+                })
                 defaultValuesAnimation.onAnimateTo(false)
                 defaultValuesAnimation.onAnimationEnd()
             }

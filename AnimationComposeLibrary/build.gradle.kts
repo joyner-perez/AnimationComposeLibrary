@@ -12,7 +12,7 @@ plugins {
 
 android {
     namespace = "com.joyner.animationcomposelibrary"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         minSdk = 23
@@ -53,7 +53,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.joyner-perez",
         artifactId = "AnimationComposeLibrary",
-        version = "1.0.4"
+        version = "1.0.5"
     )
 
     pom {

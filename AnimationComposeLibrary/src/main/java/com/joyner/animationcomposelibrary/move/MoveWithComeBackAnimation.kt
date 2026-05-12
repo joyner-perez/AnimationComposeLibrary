@@ -38,7 +38,7 @@ fun MoveWithComeBackAnimation(
         animationSpec = tween(
             durationMillis = defaultValuesAnimation.durationInMillis / 2,
             delayMillis = if (endAnimation && defaultValuesAnimation.infinity) {
-                defaultValuesAnimation.delayInitInMillis
+                defaultValuesAnimation.delayInfinityMillis
             } else {
                 0
             },

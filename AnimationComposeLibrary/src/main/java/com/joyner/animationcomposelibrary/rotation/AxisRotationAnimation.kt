@@ -1,13 +1,13 @@
 package com.joyner.animationcomposelibrary.rotation
 
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import com.joyner.animationcomposelibrary.core.DefaultValuesAnimation
+import com.joyner.animationcomposelibrary.core.getAnimationSpec
 
 /**
  * Axis rotation animation
@@ -31,14 +31,13 @@ fun AxisRotationAnimation(
         } else {
             defaultValuesAnimation.initValue
         },
-        animationSpec = tween(
-            durationMillis = defaultValuesAnimation.durationInMillis,
-            delayMillis = if (endAnimation && defaultValuesAnimation.infinity) {
+        animationSpec = getAnimationSpec(
+            defaultValuesAnimation = defaultValuesAnimation,
+            delayInitInMillis = if (endAnimation && defaultValuesAnimation.infinity) {
                 defaultValuesAnimation.delayInfinityMillis
             } else {
                 defaultValuesAnimation.delayInitInMillis
-            },
-            easing = defaultValuesAnimation.easingValue
+            }
         ),
         finishedListener = {
             endAnimation = it == defaultValuesAnimation.targetValue

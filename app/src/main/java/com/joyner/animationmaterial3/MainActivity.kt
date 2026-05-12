@@ -1,15 +1,15 @@
 package com.joyner.animationmaterial3
 
-import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -17,7 +17,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,17 +50,25 @@ import com.joyner.animationcomposelibrary.rotation.MiddleExeXYRotationAnimation
 import com.joyner.animationmaterial3.ui.theme.AnimationMaterial3Theme
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContent {
             AnimationMaterial3Theme {
-                // A surface container using the 'background' color from the theme
-                Column(
-                    modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    AnimationExamples(LocalContext.current)
+                Scaffold(
+                    topBar = {
+                        CenterAlignedTopAppBar(
+                            title = { Text("Animation Library") }
+                        )
+                    }
+                ) { innerPadding ->
+                    AnimationExamples(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .consumeWindowInsets(innerPadding),
+                        contentPadding = innerPadding
+                    )
                 }
             }
         }
@@ -65,12 +76,22 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun AnimationExamples(context: Context) {
+fun AnimationExamples(
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
+    val context = LocalContext.current
+    val topPadding = contentPadding.calculateTopPadding()
+    val bottomPadding = contentPadding.calculateBottomPadding()
+
     LazyColumn(
-        modifier =
-            Modifier
-                .fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+        modifier = modifier,
+        contentPadding = PaddingValues(
+            start = 16.dp,
+            end = 16.dp,
+            top = topPadding,
+            bottom = bottomPadding
+        )
     ) {
         item {
             var rotationDegreeTo by rememberSaveable { mutableStateOf(false) }
@@ -82,15 +103,17 @@ fun AnimationExamples(context: Context) {
                             initValue = 0f,
                             targetValue = 360f,
                             onAnimateTo = { rotationDegreeTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Text(
                         modifier =
                             Modifier
                                 .clickable { rotationDegreeTo = !rotationDegreeTo }
                                 .graphicsLayer(rotationY = it),
-                        text = "Axis Y Rotation Animation",
+                        text = "Axis Y Rotation Animation"
                     )
                 }
             }
@@ -105,15 +128,17 @@ fun AnimationExamples(context: Context) {
                             initValue = 0f,
                             targetValue = 360f,
                             onAnimateTo = { rotationDegreeTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Text(
                         modifier =
                             Modifier
                                 .clickable { rotationDegreeTo = !rotationDegreeTo }
                                 .graphicsLayer(rotationX = it),
-                        text = "Axis X Rotation Animation",
+                        text = "Axis X Rotation Animation"
                     )
                 }
             }
@@ -128,15 +153,17 @@ fun AnimationExamples(context: Context) {
                             initValue = 0f,
                             targetValue = 45f,
                             onAnimateTo = { rotationDegreeTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Text(
                         modifier =
                             Modifier
                                 .clickable { rotationDegreeTo = !rotationDegreeTo }
                                 .graphicsLayer(rotationZ = it),
-                        text = "Angle Rotation Animation",
+                        text = "Angle Rotation Animation"
                     )
                 }
             }
@@ -149,8 +176,10 @@ fun AnimationExamples(context: Context) {
                         DefaultComplexAnimation(
                             animate = rotationDegreeTo,
                             onAnimateTo = { rotationDegreeTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
                         modifier =
@@ -158,9 +187,9 @@ fun AnimationExamples(context: Context) {
                                 .clickable { rotationDegreeTo = !rotationDegreeTo }
                                 .graphicsLayer(
                                     rotationX = xRotation,
-                                    rotationY = yRotation,
+                                    rotationY = yRotation
                                 ),
-                        text = "Axis XY Rotation Animation",
+                        text = "Axis XY Rotation Animation"
                     )
                 }
             }
@@ -173,8 +202,10 @@ fun AnimationExamples(context: Context) {
                         DefaultComplexAnimation(
                             animate = rotationDegreeTo,
                             onAnimateTo = { rotationDegreeTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) { xRotation: Float, yRotation: Float ->
                     Text(
                         modifier =
@@ -182,9 +213,9 @@ fun AnimationExamples(context: Context) {
                                 .clickable { rotationDegreeTo = !rotationDegreeTo }
                                 .graphicsLayer(
                                     rotationX = xRotation,
-                                    rotationY = yRotation,
+                                    rotationY = yRotation
                                 ),
-                        text = "Middle Axis XY Rotation Animation",
+                        text = "Middle Axis XY Rotation Animation"
                     )
                 }
             }
@@ -199,16 +230,18 @@ fun AnimationExamples(context: Context) {
                             initValue = 0f,
                             targetValue = 16f,
                             onAnimateTo = { moveTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
                         ),
-                    direction = EnumMoveDirection.RIGHT,
+                    direction = EnumMoveDirection.RIGHT
                 ) {
                     Text(
                         modifier =
                             Modifier
                                 .clickable { moveTo = !moveTo }
                                 .padding(it),
-                        text = "Move With Come Back Animation",
+                        text = "Move With Come Back Animation"
                     )
                 }
             }
@@ -223,16 +256,18 @@ fun AnimationExamples(context: Context) {
                             initValue = 0f,
                             targetValue = 16f,
                             onAnimateTo = {},
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
                         ),
-                    direction = EnumMoveDirection.RIGHT,
+                    direction = EnumMoveDirection.RIGHT
                 ) {
                     Text(
                         modifier =
                             Modifier
                                 .clickable { moveTo = !moveTo }
                                 .padding(it),
-                        text = "MoveAnimation",
+                        text = "MoveAnimation"
                     )
                 }
             }
@@ -247,8 +282,10 @@ fun AnimationExamples(context: Context) {
                             initValue = 24f,
                             targetValue = 48f,
                             onAnimateTo = {},
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Icon(
                         modifier =
@@ -256,7 +293,7 @@ fun AnimationExamples(context: Context) {
                                 .clickable { expandTo = !expandTo }
                                 .size(it.dp),
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "Config",
+                        contentDescription = "Config"
                     )
                 }
             }
@@ -273,11 +310,13 @@ fun AnimationExamples(context: Context) {
                             initValue = 24f,
                             targetValue = 48f,
                             onAnimateTo = { expandTo = it },
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             modifier =
@@ -285,7 +324,7 @@ fun AnimationExamples(context: Context) {
                                     .clickable { infinity = !infinity }
                                     .size(it.dp),
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = "Config",
+                            contentDescription = "Config"
                         )
 
                         Text(
@@ -293,7 +332,7 @@ fun AnimationExamples(context: Context) {
                                 Modifier
                                     .clickable { expandTo = !expandTo },
                             fontSize = it.sp,
-                            text = "Hello World!",
+                            text = "Hello World!"
                         )
                     }
                 }
@@ -310,8 +349,10 @@ fun AnimationExamples(context: Context) {
                             initValue = 1f,
                             targetValue = 0f,
                             onAnimateTo = {},
-                            onAnimationEnd = { Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show() },
-                        ),
+                            onAnimationEnd = {
+                                Toast.makeText(context, "Animation end", Toast.LENGTH_SHORT).show()
+                            }
+                        )
                 ) {
                     Icon(
                         modifier =
@@ -319,7 +360,7 @@ fun AnimationExamples(context: Context) {
                                 .clickable { expandTo = !expandTo }
                                 .alpha(it),
                         imageVector = Icons.Outlined.Settings,
-                        contentDescription = "Config",
+                        contentDescription = "Config"
                     )
                 }
             }
@@ -336,11 +377,11 @@ fun AnimationExamples(context: Context) {
                             initValue = 1f,
                             targetValue = 0f,
                             onAnimateTo = { expandTo = it },
-                            onAnimationEnd = {},
-                        ),
+                            onAnimationEnd = {}
+                        )
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
                             modifier =
@@ -348,7 +389,7 @@ fun AnimationExamples(context: Context) {
                                     .clickable { infinity = !infinity }
                                     .alpha(it),
                             imageVector = Icons.Outlined.Settings,
-                            contentDescription = "Config",
+                            contentDescription = "Config"
                         )
 
                         Text(
@@ -356,9 +397,83 @@ fun AnimationExamples(context: Context) {
                                 Modifier
                                     .clickable { expandTo = !expandTo }
                                     .alpha(it),
-                            text = "Hello World!",
+                            text = "Hello World!"
                         )
                     }
+                }
+            }
+        }
+        item {
+            var animate by rememberSaveable { mutableStateOf(true) }
+            ItemListDemo {
+                AxisRotationAnimation(
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = true,
+                            animate = animate,
+                            initValue = 0f,
+                            targetValue = 360f,
+                            onAnimateTo = { animate = it },
+                            onAnimationEnd = {}
+                        )
+                ) {
+                    Text(
+                        modifier =
+                            Modifier
+                                .clickable { animate = !animate }
+                                .graphicsLayer(rotationY = it),
+                        text = "Infinite Y Rotation"
+                    )
+                }
+            }
+        }
+        item {
+            var animate by rememberSaveable { mutableStateOf(true) }
+            ItemListDemo {
+                MoveWithComeBackAnimation(
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = true,
+                            animate = animate,
+                            initValue = 0f,
+                            targetValue = 24f,
+                            onAnimateTo = { animate = it },
+                            onAnimationEnd = {}
+                        ),
+                    direction = EnumMoveDirection.RIGHT
+                ) {
+                    Text(
+                        modifier =
+                            Modifier
+                                .clickable { animate = !animate }
+                                .padding(it),
+                        text = "Infinite Move"
+                    )
+                }
+            }
+        }
+        item {
+            var animate by rememberSaveable { mutableStateOf(true) }
+            ItemListDemo {
+                ExpandWithComeBackAnimation(
+                    defaultValuesAnimation =
+                        DefaultValuesAnimation(
+                            infinity = true,
+                            animate = animate,
+                            initValue = 24f,
+                            targetValue = 48f,
+                            onAnimateTo = { animate = it },
+                            onAnimationEnd = {}
+                        )
+                ) {
+                    Icon(
+                        modifier =
+                            Modifier
+                                .clickable { animate = !animate }
+                                .size(it.dp),
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = "Config"
+                    )
                 }
             }
         }
@@ -372,7 +487,7 @@ fun ItemListDemo(content: @Composable () -> Unit) {
             Modifier
                 .fillMaxWidth()
                 .padding(vertical = 16.dp),
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.Center
     ) {
         content()
     }
@@ -382,6 +497,6 @@ fun ItemListDemo(content: @Composable () -> Unit) {
 @Composable
 fun DefaultPreview() {
     AnimationMaterial3Theme {
-        AnimationExamples(LocalContext.current)
+        AnimationExamples()
     }
 }
