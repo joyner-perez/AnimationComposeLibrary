@@ -53,7 +53,7 @@ mavenPublishing {
     coordinates(
         groupId = "io.github.joyner-perez",
         artifactId = "AnimationComposeLibrary",
-        version = "1.0.8"
+        version = "1.0.9"
     )
 
     pom {
